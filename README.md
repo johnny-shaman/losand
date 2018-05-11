@@ -1,2 +1,4 @@
-# __
-__ is a equal monad imprements Object.prototype
+# losand
+
+this._.$($ => console.log($ === this))._
+losand is a equal monad imprements Object.prototype
