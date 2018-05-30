@@ -1,0 +1,1 @@
+module.exports = require("./public/lib/losand.js");

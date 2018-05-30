@@ -1,0 +1,23 @@
+{
+  "name": "losand",
+  "version": "0.0.0",
+  "description": "losand is a equal monad",
+  "main": "losand.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnny-shaman/losand.git"
+  },
+  "keywords": [
+    "functional",
+    "monad"
+  ],
+  "author": "Noboru Okazaki",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/johnny-shaman/losand/issues"
+  },
+  "homepage": "https://github.com/johnny-shaman/losand#readme"
+}
