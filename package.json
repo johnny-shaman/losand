@@ -4,7 +4,7 @@
   "description": "losand is a equal monad",
   "main": "losand.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "istanbul cover --include-all-sources jasmine-node ./public/spec/"
   },
   "repository": {
     "type": "git",

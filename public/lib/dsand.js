@@ -13,11 +13,13 @@
     let $ = function (n) {
         return (
             _(n.tagName !== undefined && $[n.tagName].prototype || $.prototype)
-            .create({n: {
-                configurable: true,
-                writable: true,
-                value: n
-            }})
+            .create({
+                n: {
+                    configurable: true,
+                    writable: true,
+                    value: n
+                },
+            })
         );
     };
 
@@ -43,7 +45,7 @@
                         delete _o["#"];
                         delete _o["."];
                         return _o;
-                    }).give($.setAttribute)
+                    }).give($.setAttribute.bind($))
                 );
             }
         },
@@ -70,14 +72,14 @@
         on: {
             configurable: true,
             value (t, ...a) {
-                a.forEach(v => this.n.on(v, t));
+                a.forEach(v => this.n.on.call(this.n, v, t));
                 return this;
             }
         },
         off: {
             configurable: true,
             value (t, ...a) {
-                a.forEach(v => this.n.off(v, t));
+                a.forEach(v => this.n.off.call(this.n, v, t));
                 return this;
             }
         },
@@ -87,11 +89,11 @@
                 (n !== undefined ? (
                         n === null ? void 0 : (
                             n.constructor === Array ?
-                            this.n.append(...n) :
-                            this.n.append(n)
+                            this.n.append.call(this.n, ...n) :
+                            this.n.append.call(this.n, n)
                         )
                     ) :
-                this.n.remove());
+                this.n.remove.call(this.n));
                 return this.n;
             }
         },
@@ -108,7 +110,7 @@
         each: {
             configurable: true,
             value (f, ...v) {
-                Array.from(this.n.children).each(v => f($(v), ...v));
+                Array.from(this.n.children).forEach(v => f($(v), ...v));
                 return this;
             }
         },
@@ -133,7 +135,7 @@
         $: {
             configurable: true,
             value (n) {
-                n.each(v => $(this.n.insertRow()).$(v));
+                n.each(v => $(this.n.insertRow.call(this.n)).$.call(this.n, v));
                 return this.n;
             }
         },
@@ -179,7 +181,7 @@
         $: {
             configurable: true,
             value (n) {
-                n.each(v => $(this.n.insertCell()).$(v));
+                n.each(v => $(this.n.insertCell.call(this.n)).$.call(this.n, v));
                 return this.n;
             }
         },
@@ -219,7 +221,7 @@
                 (n.constructor = Object ?
                     _(n).keys._.map(k => new Option(k, n[k])) :
                     n.map(v => v.constructor === Option ? v : new Option(v, v))
-                ).forEach(v => this.n.options.add(v));
+                ).forEach(v => this.n.options.add.call(this.n, v));
                 return this.n;
             }
         },
@@ -245,7 +247,7 @@
         $: {
             configurable: true,
             value (a) {
-                this.n.append(...a.map(v => v.constructor === Array ? ul.$(v) : li.$(v)));
+                this.n.append.call(this.n, ...a.map(v => v.constructor === Array ? ul.$(v) : li.$(v)));
                 return this.n;
             }
         }
@@ -261,7 +263,7 @@
         $: {
             configurable: true,
             value (a) {
-                this.n.append(...a.map(v => v.constructor === Array ? ol.$(v) : li.$(v)));
+                this.n.append.call(this.n, ...a.map(v => v.constructor === Array ? ol.$(v) : li.$(v)));
                 return this.n;
             }
         }
@@ -331,10 +333,9 @@
             configurable: true,
             writable: true,
             value(e) {
-                this[e.type]._
-                .isObj.$($ => $[e.altType._.isStr.take($ => $).or.take($ => this[e.type].type).out._].call(this, e))
-                .or
-                .isFunc.$($ => this[e.type](e));
+                this[e.type].constructor === Object ? 
+                this[e.type][JSON.parse(e.data).type ? JSON.parse(e.data).type: this[e.type].type].call(this, e) :
+                this[e.type](e);
                 e = null;
             }
         }

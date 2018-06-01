@@ -1,4 +1,8 @@
 (()=>{
+    Object.values = Object.values || function (o) {
+        return Object.keys(o).map(k => o[k]);
+    };
+
     let _ = function (v, re) {
         return Object.create(_.prototype, {
             v: {
@@ -24,55 +28,55 @@
         _: {
             configurable: true,
             get () {
-              return this.join;
+                return this.join;
             }
         },
         $: {
             configurable: true,
             value (f, ...v) {
-              return this.map(f, ...v).re;
+                return this.map(f, ...v).re;
             }
         },
         $$: {
             configurable: true,
             value (f, ...v) {
-              return this.fit(f, ...v).re;
+                return this.fit(f, ...v).re;
             }
         },
         map: {
             configurable: true,
             value (f, ...v) {
-              return _(f(this.v, ...v), this);
+                return _(f(this.v, ...v), this);
             }
         },
         fit: {
             configurable: true,
             value (f, ...v) {
-              return _(f(...v, this.v), this);
+                return _(f(...v, this.v), this);
             }
         },
         bind: {
             configurable: true,
-            value (f, ...v) {
-              return Object.assign(this.map(f, ...v)._, {re: this});
+            value (...v) {
+                return Object.assign(this.map(...v)._, {re: this});
             }
         },
         link: {
             configurable: true,
-            value (f, ...v) {
-              return Object.assign(this.fit(f, ...v)._, {re: this});
+            value (...v) {
+                return Object.assign(this.fit(...v)._, {re: this});
             }
         },
         keys: {
             configurable: true,
             get () {
-              return this.map(Object.keys);
+                return this.map(Object.keys);
             }
         },
         vals: {
             configurable: true,
             get () {
-              return this.map(Object.values);
+                return this.map(Object.values.bind(this._));
             }
         },
         draw: {
@@ -102,7 +106,7 @@
         folk: {
             configurable: true,
             value (o = {}) {
-                return this.map($ => Object.create($.constructor.prototype), o);
+                return this.map($ => Object.create($.constructor.prototype, o));
             }
         },
         give: {
@@ -112,17 +116,6 @@
                 return this;
             }
         },
-        take: {
-            configurable: true,
-            value (f, ...v) {
-                return _(
-                    this.keys._
-                        .map(k => ({[k] : f(k, this.v[k], ...v)}))
-                        .reduce((p, c) => Object.assign(p, c), this.folk),
-                    this
-                );
-            }
-        },
         json: {
             configurable: true,
             get () {
@@ -130,9 +123,6 @@
             }
         }
     });
-
-    _._ = (...f) => (v) => f.reduceRight((p, c) => c(p), v);
-    _.$ = (...v) => v.includes(undefined) || v.includes(null) ? (...vv) => _.$(_(v).drop(vv)._) : (f) => f(...v);
 
     _.none = function (re) {
         return _(_.none.prototype).create({
@@ -179,12 +169,6 @@
             configurable: true,
             get () {
                 return this.forEach;
-            }
-        },
-        take: {
-            configurable: true,
-            value (f, ...a) {
-                return this.map((v, k) => f(v, ...a, k));
             }
         }
     });
