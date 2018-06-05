@@ -11,16 +11,18 @@
 
 (() => {
     let $ = function (n) {
-        return (
-            _(n.tagName !== undefined && $[n.tagName].prototype || $.prototype)
-            .create({
-                n: {
-                    configurable: true,
-                    writable: true,
-                    value: n
-                },
-            })
-        );
+        return _(
+            (n.tagName !== undefined && $[n.tagName]) ?
+            $[n.tagName].prototype :
+            $.prototype
+        )
+        .create({
+            n: {
+                configurable: true,
+                writable: true,
+                value: n
+            }
+        })._;
     };
 
     $._ = document.querySelector;
@@ -37,15 +39,16 @@
         _: {
             configurable: true,
             value (o) {
-                return $.f($ => _(o)
+                return this.f($ => _(o)
                     .draw(o["#"] !== undefined ? this["#"](o) : {})
                     .draw(o["."] !== undefined ? this["."](o) : {})
                     .draw(o.css  !== undefined ? this.css(o) : {})
-                    .bind(_o => {
+                    .$(_o => {
                         delete _o["#"];
                         delete _o["."];
                         return _o;
-                    }).give($.setAttribute.bind($))
+                    })
+                    .give($.setAttribute.bind($))
                 );
             }
         },
@@ -71,30 +74,30 @@
         },
         on: {
             configurable: true,
-            value (t, ...a) {
-                a.forEach(v => this.n.on.call(this.n, v, t));
+            value (d, ...a) {
+                a !== undefined ? a.forEach(v => this.n.on.call(this.n, v, d)) : _(d).keys.forEach(k => this.n.on.call(this.n, k, d));
                 return this;
             }
         },
         off: {
             configurable: true,
-            value (t, ...a) {
-                a.forEach(v => this.n.off.call(this.n, v, t));
+            value (d, ...a) {
+                a !== undefined ? a.forEach(v => this.n.off.call(this.n, v, d)) : _(d).keys.forEach(k => this.n.off.call(this.n, k, d));
                 return this;
             }
         },
         $: {
             configurable: true,
             value (n) {
-                (n !== undefined ? (
-                        n === null ? void 0 : (
+                (n !== null ? (
+                        n === undefined ? void 0 : (
                             n.constructor === Array ?
                             this.n.append.call(this.n, ...n) :
                             this.n.append.call(this.n, n)
                         )
                     ) :
                 this.n.remove.call(this.n));
-                return this.n;
+                return this;
             }
         },
         pick: {
@@ -135,7 +138,7 @@
         $: {
             configurable: true,
             value (n) {
-                n.each(v => $(this.n.insertRow.call(this.n)).$.call(this.n, v));
+                n.each(v => $(this.n.insertRow.call(this.n)).$(v));
                 return this.n;
             }
         },
@@ -181,7 +184,7 @@
         $: {
             configurable: true,
             value (n) {
-                n.each(v => $(this.n.insertCell.call(this.n)).$.call(this.n, v));
+                n.each(v => $(this.n.insertCell.call(this.n)).$(v));
                 return this.n;
             }
         },
@@ -334,7 +337,11 @@
             writable: true,
             value(e) {
                 this[e.type].constructor === Object ? 
-                this[e.type][JSON.parse(e.data).type ? JSON.parse(e.data).type: this[e.type].type].call(this, e) :
+                this[e.type][
+                    JSON.parse(e.data).type ?
+                    JSON.parse(e.data).type :
+                    this[e.type].type
+                ].call(this, e) :
                 this[e.type](e);
                 e = null;
             }
@@ -408,4 +415,6 @@
         strong:     {get: () => $(document.createElement("strong"))},
         span:       {get: () => $(document.createElement("span"))}
     });
+
+    this.$ = $;
 })();

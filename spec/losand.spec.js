@@ -1,5 +1,5 @@
 describe("test of is", function () {
-    const _ = require("../lib/losand.js");
+    const _ = require("../losand.js");
     const a = {a: 1};
 
     const b = (v) => Object.create({
@@ -118,24 +118,42 @@ describe("test of is", function () {
     it(
         "$ is chainable method",
         () => expect(
-            _(b(0))
-            .$(($, v) => $.adder(v), 5)
-            .$(($, v) => $.adder(v), 5)
+            _(
+            	Object.create({
+            		add (v) {this.b += v}
+            	},{
+            		b:{
+            			writable: true,
+            			value: 0
+            		}
+            	})
+            )
+            .$($ => $.add(5))
+            .$($ => $.add(5))
             ._.b
         ).toBe(
-            0
+            10
         )
     );
 
     it(
         "$$ have been chainable IO",
         () => expect(
-            _(b(5))
-            .$$((v, $) => $.adder(v), 5)
-            .$$((v, $) => $.adder(v), 5)
+            _(
+            	Object.create({
+            		add (v) {this.b += v}
+            	},{
+            		b:{
+            			writable: true,
+            			value: 0
+            		}
+            	})
+            )
+            .$$($ => $.add(5))
+            .$$($ => $.add(5))
             ._.b
         ).toBe(
-            5
+            10
         )
     );
 
