@@ -75,14 +75,14 @@
         on: {
             configurable: true,
             value (d, ...a) {
-                a !== undefined ? a.forEach(v => this.n.on.call(this.n, v, d)) : _(d).keys.forEach(k => this.n.on.call(this.n, k, d));
+                a !== undefined ? a.forEach(v => this.n.on.call(this.n, v, d)) : _(d).keys._.forEach(k => this.n.on.call(this.n, k, d));
                 return this;
             }
         },
         off: {
             configurable: true,
             value (d, ...a) {
-                a !== undefined ? a.forEach(v => this.n.off.call(this.n, v, d)) : _(d).keys.forEach(k => this.n.off.call(this.n, k, d));
+                a !== undefined ? a.forEach(v => this.n.off.call(this.n, v, d)) : _(d).keys._.forEach(k => this.n.off.call(this.n, k, d));
                 return this;
             }
         },
