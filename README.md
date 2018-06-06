@@ -88,7 +88,8 @@ ex. inside public folder's subfolder
     })
     .$($ => $.add(5))
     .$($ => $.add(5))
-    ._.b === 10
+    ._.b === 10;
+
     // ex2. (prototype chain's method can work)
     _(
     	Object.create({
@@ -102,153 +103,68 @@ ex. inside public folder's subfolder
     )
     .$($ => $.add(5))
     .$($ => $.add(5))
-    ._.b === 10
+    ._.b === 10;
 
-    _()
+    // $$ have been chainable IO
+    _(
+    	Object.create({
+    		add (v) {this.b += v}
+    	},{
+    		b:{
+    			writable: true,
+    			value: 0
+    		}
+    	})
+    )
+    .$$((v, $) => $.add(v), 5)
+    .$$((v, $) => $.add(v), 5)
+    ._.b === 10;
 
-    it(
-        "$$ have been chainable IO",
-        () => expect(
-            _(b(5))
-            .$$((v, $) => $.adder(v), 5)
-            .$$((v, $) => $.adder(v), 5)
-            ._.b
-        ).toBe(
-            5
-        )
+    // keys
+    _({r: 128}).keys._[0] === "r";
+
+    //vals
+    _({r: 128}).vals._[0] === 128;
+
+    //draw is wrapped Object assign from argumentate Object"
+    _({a: 3}).draw({b: 5}).$($ => {
+        $.a === 3; // {a: 3} is wrapped on having
+        $.b === 5;
+        
+    })
+
+    //.drop is wrapped Object assign to argumentate Object
+    _({a: 3}).drop({b: 5}).$($ => {
+        $.a === 3; 
+        $.b === 5; // {b: 5} is wrapped on having
+        
     );
 
-    it(
-        ".keys get wrapped Object's keys Array",
-        () => expect(
-            _(a).keys._[0]
-        ).toBe(
-            "a"
-        )
-    );
+    //define is Object.defineProperties on wrapped Object
+    _({a: 68}).define({
+        defined: {
+            configurable: true,
+            value: 123
+        }
+    })._.defined === 123;
 
-    it(
-        ".vals get wrapped Object's values Array",
-        () => expect(
-            _(a).vals._[0]
-        ).toBe(
-            1
-        )
-    );
+    //create is create a new Object inherit on wrapped Object
+    Object.getPrototypeOf(
+        _(a).create({})._ // Object.create(a, {});
+    ) === a;
 
-    it(
-        ".draw is wrapped Object assign from argumentate Object",
-        () => expect(
-            _(a).draw(b(2))._
-        ).toBe(
-            a
-        )
-    );
+    _(a).folk({})._.constructor.prototype === a.constructor.prototype
 
-    it(
-        ".drop is wrapped Object assign to argumentate Object",
-        () => expect(
-            _(b(5)).drop(a)._
-        ).toBe(
-            a
-        )
-    );
+    //.give is a iterator of wrapped Object to apply on argumentate function
+    _({a : 1}).give((key, val) => {
+        console.log(key + ": " + val)
+    });
 
-    it(
-        ".define is wrapped Object doing defineProperties",
-        () => expect(
-            _(b(5)).define({
-                defined: {
-                    configurable: true,
-                    value: 123
-                }
-            })._.defined
-        ).toBe(
-            123
-        )
-    );
+    _({a: 1}).json === JSON.stringify({a: 1})
 
-    it(
-        ".create is create a new Object inherit on wrapped Object ",
-        () => expect(
-            Object.getPrototypeOf(_(a).create({})._)
-        ).toBe(
-            a
-        )
-    );
+    //[0, 1, 2].each
+    [2, 3, 4].each((v, k) => console.log(k * v));
 
-    it(
-        ".folk is create a new Object inherit on wrapped Object's ParentObject ",
-        () => expect(
-            _(a).folk({})._.constructor.prototype
-        ).toBe(
-            a.constructor.prototype
-        )
-    );
-
-    it(
-        ".give is a iterator of wrapped Object to apply on argumentate function",
-        () => expect(
-            (() => {
-                _({a : 1}).give(qr);
-                return rs.a;
-            })()
-        ).toBe(
-            1
-        )
-    );
-
-    it(
-        ".json get's wrapped Object's JSONString",
-        () => expect(
-            _(a).json
-        ).toBe(
-            JSON.stringify(a)
-        )
-    );
-
-    it(
-        "_.none().join return undefined",
-        () => expect(
-            _.none({}).join
-        ).toBe(
-            undefined
-        )
-    );
-
-    it(
-        "_.none()._ return undefined",
-        () => expect(
-            _.none({})._
-        ).toBe(
-            undefined
-        )
-    );
-
-    it(
-        "_.none({}).map return _.none({}) and isn't to do any more",
-        () => expect(
-            _.none({}).map(k).constructor
-        ).toBe(
-            _.none
-        )
-    );
-
-    it(
-        "Array.prototype.each === Array.prototype.forEach",
-        () => expect(
-            ary.each
-        ).toBe(
-            ary.forEach
-        )
-    );
-
-    it(
-        "String.prototype.json get parsed after this value",
-        () => expect(
-            _(a).json.json._.a
-        ).toBe(
-            1
-        )
-    );
+    //String.prototype.json get _(parsed_object)
+    _({a: 3}).json.json._.a === 3
 ~~~

@@ -88,14 +88,12 @@
         },
         $: {
             configurable: true,
-            value (n) {
-                (n !== null ? (
-                        n === undefined ? void 0 : (
-                            n.constructor === Array ?
-                            this.n.append.call(this.n, ...n) :
-                            this.n.append.call(this.n, n)
-                        )
-                    ) :
+            value (...n) {
+                (n[0] !== null ? (
+                    n === undefined ?
+                    void 0 :
+                    this.n.append.call(this.n, ...n.map(v => v instanceof $ ? v.n : v))
+                ) :
                 this.n.remove.call(this.n));
                 return this;
             }
