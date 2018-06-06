@@ -12,17 +12,17 @@ This library's public folder can be determining html and misc folder
 
 ### worker
 
-ex. inside public folder's subfolder
+ex. inside ./lib subfolder
 ~~~javascript
-    importScripts("../lib/");
+    importScripts("./lib/losand.js");
 ~~~
 
 ### html
 
 ex. inside public folder's subfolder
-~~~javascript
-    <script src="https://cdn.jsdelivr.net/npm/losand/dist/losand.js">
-    <script src="https://cdn.jsdelivr.net/npm/losand/dist/dsand.js">
+~~~html
+    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.2/losand.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.2/dsand.js"></script>
 ~~~
 
 ~~~javascript
@@ -167,4 +167,34 @@ ex. inside public folder's subfolder
 
     //String.prototype.json get _(parsed_object)
     _({a: 3}).json.json._.a === 3
+
+    const EETest = function () {
+        EventEmitter.call(this);
+    };
+
+    EETest.prototype = _(EventEmitter.prototype).create({
+        constructor: {
+            configurable: true,
+            writable: true,
+            value: EETest
+        }
+    })._;
+
+    const eeTest = new EETest();
+
+    //addLitener
+    _(eeTest).on({
+        "get": () => {},
+        "put": () => {},
+        "post": () => {},
+        "delete": () => {}
+    })
+
+    //addOnce
+    _(eeTest).once({
+        "get": () => {},
+        "put": () => {},
+        "post": () => {},
+        "delete": () => {}
+    })
 ~~~

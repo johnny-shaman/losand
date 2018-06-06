@@ -35,9 +35,9 @@ describe("test of is", function () {
             writable: true,
             value: EETest
         }
-    });
+    })._;
 
-    const eeTest = _(new EETest());
+    const eeTest = new EETest();
 
     it("testing b", () => expect(b(10).b).toBe(10));
 
@@ -263,30 +263,21 @@ describe("test of is", function () {
     );
 
     it(
-        ".on", 
+        ".once",
         () => expect(
-            eeTest.on({
-                get (e) {}
-            })
-        )
-    );
-    
-    it(
-        ".once", 
-        () => expect(
-            eeTest.once({
-                get (e) {}
-            })
-        )
+            _(eeTest).once({
+                "put" (e) {return e}
+            })._.emit("put")
+        ).toBe(true)
     );
 
     it(
-        ".on", 
+        ".on",
         () => expect(
-            eeTest.off({
-                get (e) {}
-            })
-        )
+            _(eeTest).on({
+                "get" (e) {return e}
+            })._.emit("get")
+        ).toBe(true)
     );
 
     it(
