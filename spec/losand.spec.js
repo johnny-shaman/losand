@@ -1,5 +1,7 @@
 describe("test of is", function () {
     const _ = require("../losand.js");
+    const EventEmitter = require("events").EventEmitter;
+    
     const a = {a: 1};
 
     const b = (v) => Object.create({
@@ -22,6 +24,20 @@ describe("test of is", function () {
     const ary = [];
     const rs = {a : 0};
     const qr = (k, v) => rs.a = v;
+
+    const EETest = function () {
+        EventEmitter.call(this);
+    };
+
+    EETest.prototype = _(EventEmitter.prototype).create({
+        constructor: {
+            configurable: true,
+            writable: true,
+            value: EETest
+        }
+    });
+
+    const eeTest = _(new EETest());
 
     it("testing b", () => expect(b(10).b).toBe(10));
 
@@ -247,6 +263,33 @@ describe("test of is", function () {
     );
 
     it(
+        ".on", 
+        () => expect(
+            eeTest.on({
+                get (e) {}
+            })
+        )
+    );
+    
+    it(
+        ".once", 
+        () => expect(
+            eeTest.once({
+                get (e) {}
+            })
+        )
+    );
+
+    it(
+        ".on", 
+        () => expect(
+            eeTest.off({
+                get (e) {}
+            })
+        )
+    );
+
+    it(
         "_.none().join return undefined",
         () => expect(
             _.none({}).join
@@ -290,4 +333,5 @@ describe("test of is", function () {
             1
         )
     );
+
 });

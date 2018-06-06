@@ -128,14 +128,21 @@
         on: {
             configurable: true,
             value (d, ...a) {
-                a !== undefined ? a.forEach(v => this.v.on.call(this.v, v, d)) : _(d).give(this.v.on.bind(this.v));
+                a !== undefined ? a.forEach(v => this.v.on.call(this.v, v, d)) : _(d).keys._.forEach(k => this.v.on.call(this.v, k, d[k].bind(d)));
+                return this;
+            }
+        },
+        once: {
+            configurable: true,
+            value (d, ...a) {
+                a !== undefined ? a.forEach(v => this.v.once.call(this.v, v, d)) : _(d).keys._.forEach(k => this.v.once.call(this.v, k, d[k].bind(d)));
                 return this;
             }
         },
         off: {
             configurable: true,
             value (d, ...a) {
-                a !== undefined ? a.forEach(v => this.v.off.call(this.v, v, d)) : _(d).give(this.v.off.bind(this.v));
+                a !== undefined ? a.forEach(v => this.v.off.call(this.v, v, d)) : _(d).keys._.forEach(k => this.v.off.call(this.v, k, d[k].bind(d)));
                 return this;
             }
         }
