@@ -116,6 +116,12 @@
                 return this;
             }
         },
+        list: {
+            configurable: true,
+            get () {
+                return this.bind(o => (o).drop(this.keys._.filter((v, k) => !isNaN(Number(k)))));
+            }
+        },
         json: {
             configurable: true,
             get () {
@@ -127,15 +133,15 @@
     this.constructor === Object && _(_.prototype).define({
         on: {
             configurable: true,
-            value (d, ...a) {
-                a.length !== 0 ? a.forEach(v => this.v.on.call(this.v, v, d)) : _(d).give(this.v.on.bind(this.v));
+            value (d) {
+                _(d).give(this.v.on.bind(this.v));
                 return this;
             }
         },
         once: {
             configurable: true,
-            value (d, ...a) {
-                a.length !== 0 ? a.forEach(v => this.v.once.call(this.v, v, d)) : _(d).give(this.v.on.bind(this.v));
+            value (d) {
+                _(d).give(this.v.once.bind(this.v));
                 return this;
             }
         }
@@ -174,11 +180,30 @@
             writable: true,
             value: _.none
         },
-        map: {
-            value () {
+        $: {
+            configurable: true,
+            value (f, ...v) {
                 return this;
             }
-        }
+        },
+        $$: {
+            configurable: true,
+            value (f, ...v) {
+                return this;
+            }
+        },
+        map: {
+            configurable: true,
+            value (f, ...v) {
+                return this;
+            }
+        },
+        fit: {
+            configurable: true,
+            value (f, ...v) {
+                return this;
+            }
+        },
     })._;
 
     _(Array.prototype).define({

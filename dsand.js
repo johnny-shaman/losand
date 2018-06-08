@@ -25,8 +25,9 @@
         })._;
     };
 
-    $._ = document.querySelector;
-    $.$ = document.querySelectorAll;
+    $.$  = s => $(document.createElement(s));
+    $._  = s => $(document.querySelector(s));
+    $.__ = s => $(document.querySelectorAll(s));
 
     _($.prototype).define({
         f: {
@@ -42,10 +43,14 @@
                 return this.f($ => _(o)
                     .draw(o["#"] !== undefined ? this["#"](o) : {})
                     .draw(o["."] !== undefined ? this["."](o) : {})
-                    .draw(o.css  !== undefined ? this.css(o) : {})
+                    .draw(o.css  !== undefined ? this.css(o)  : {})
                     .$(_o => {
+                        _o.$ !== undefined && this.$(...o.$);
+                        _o.on !== undefined && this.on(_o.on);
                         delete _o["#"];
                         delete _o["."];
+                        delete _o.$;
+                        delete _o.on;
                         return _o;
                     })
                     .give($.setAttribute.bind($))
@@ -111,7 +116,7 @@
         each: {
             configurable: true,
             value (f, ...v) {
-                Array.from(this.n.children).forEach(v => f($(v), ...v));
+                _(this.n.children).list._.forEach(vv => f($(vv), ...v));
                 return this;
             }
         },

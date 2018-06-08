@@ -21,8 +21,8 @@ ex. inside ./lib subfolder
 
 ex. inside public folder's subfolder
 ~~~html
-    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.2/losand.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.2/dsand.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.3/losand.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.3/dsand.js"></script>
 ~~~
 
 ~~~javascript
@@ -133,12 +133,14 @@ ex. inside public folder's subfolder
         
     })
 
-    //.drop is wrapped Object assign to argumentate Object
+    //drop is wrapped Object assign to argumentate Object
     _({a: 3}).drop({b: 5}).$($ => {
         $.a === 3; 
         $.b === 5; // {b: 5} is wrapped on having
         
     );
+    //list 
+    _()
 
     //define is Object.defineProperties on wrapped Object
     _({a: 68}).define({
@@ -167,7 +169,9 @@ ex. inside public folder's subfolder
 
     //String.prototype.json get _(parsed_object)
     _({a: 3}).json.json._.a === 3
-
+~~~
+## Only node.js
+~~~javascript
     const EETest = function () {
         EventEmitter.call(this);
     };
@@ -197,4 +201,53 @@ ex. inside public folder's subfolder
         "post": () => {},
         "delete": () => {}
     })
+~~~
+## Browser Only!!
+~~~javascript
+//append HTMLElement
+body
+.$(
+    header.$(
+        h1.$("Hello _(losand)._").css({margin: "16px"}),
+        h2.$("Untouchable Any Directly").css({margin: "16px"})
+    )
+    ._({
+        "#": "head",
+        ".": "wrapper"
+    })
+    .css({
+        margin: "0, auto"
+    }),
+    article.$(
+        h1.$("_(losand) wrapping a value").css({
+            margin: "8px",
+            padding:"8px",
+            borderBottom: "1px solid #888888"
+        }),
+        p.$("losand wrapping a value on monad and like to Usage here"),
+        p.$(a._({href:"https://github.com/johnny-shaman/losand/blob/master/README.md"}).$("readme on github")),
+        p.$(button.on({
+            click (e) {
+                console.log(this !== e.target); // true
+                alert("hello _(losand)._");
+            }
+        }).$("click me"))
+    )
+    ._({
+        "#": "today",
+        ".": "wrapper article"
+    })
+)
+._({
+    "#": "view",
+    ".": "wrapper"
+})
+
+//querySelector
+$._("#today").$(p.$("append"));
+
+//remove Selected Query
+$._("#today").$(null);
+
+//
 ~~~

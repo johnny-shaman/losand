@@ -4,17 +4,7 @@ describe("test of is", function () {
     
     const a = {a: 1};
 
-    const b = (v) => Object.create({
-        adder (v) {
-            this.b + v;
-        }
-    }, {
-        b: {
-            writable: true,
-            configurable: true,
-            value: v
-        }
-    });
+    const b = (v) => ({b: v});
 
     const c = b(15);
     const k = x => _({a: x.a + 5});
@@ -37,7 +27,7 @@ describe("test of is", function () {
         }
     })._;
 
-    const eeTest = new EETest();
+    const eeTest = _(new EETest());
 
     it("testing b", () => expect(b(10).b).toBe(10));
 
@@ -194,7 +184,7 @@ describe("test of is", function () {
     it(
         ".draw is wrapped Object assign from argumentate Object",
         () => expect(
-            _(a).draw(b(2))._
+            _(a).draw({b : 2})._
         ).toBe(
             a
         )
@@ -203,7 +193,7 @@ describe("test of is", function () {
     it(
         ".drop is wrapped Object assign to argumentate Object",
         () => expect(
-            _(b(5)).drop(a)._
+            _({b: 2}).drop(a)._
         ).toBe(
             a
         )
@@ -212,7 +202,7 @@ describe("test of is", function () {
     it(
         ".define is wrapped Object doing defineProperties",
         () => expect(
-            _(b(5)).define({
+            _({b: 5}).define({
                 defined: {
                     configurable: true,
                     value: 123
@@ -254,6 +244,15 @@ describe("test of is", function () {
     );
 
     it(
+        ".list get's wrapped Array like Object's to Array",
+        () => expect(
+            _({0: 3, 1: 7, 2: 12, a: 0}).list._[2]
+        ).toBe(
+            12
+        )
+    );
+
+    it(
         ".json get's wrapped Object's JSONString",
         () => expect(
             _(a).json
@@ -265,7 +264,7 @@ describe("test of is", function () {
     it(
         ".once",
         () => expect(
-            _(eeTest).once({
+            eeTest.once({
                 "put" (e) {return e}
             })._.emit("put")
         ).toBe(true)
@@ -274,10 +273,19 @@ describe("test of is", function () {
     it(
         ".on",
         () => expect(
-            _(eeTest).on({
+            eeTest.on({
                 "get" (e) {return e}
             })._.emit("get")
         ).toBe(true)
+    );
+
+    it(
+        "_.none().join return undefined",
+        () => expect(
+            _.none(c).re
+        ).toBe(
+            c
+        )
     );
 
     it(
@@ -302,6 +310,33 @@ describe("test of is", function () {
         "_.none({}).map return _.none({}) and isn't to do any more",
         () => expect(
             _.none({}).map(k).constructor
+        ).toBe(
+            _.none
+        )
+    );
+
+    it(
+        "_.none({}).map return _.none({}) and isn't to do any more",
+        () => expect(
+            _.none({}).fit(k).constructor
+        ).toBe(
+            _.none
+        )
+    );
+
+    it(
+        "_.none({}).$ return _.none({}) and isn't to do any more",
+        () => expect(
+            _.none({}).$(k).constructor
+        ).toBe(
+            _.none
+        )
+    );
+
+    it(
+        "_.none({}).$$ return _.none({}) and isn't to do any more",
+        () => expect(
+            _.none({}).$$(k).constructor
         ).toBe(
             _.none
         )
