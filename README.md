@@ -134,8 +134,8 @@ ex. inside ./lib subfolder
     _({a: 3}).drop({b: 5}).$($ => {
         $.a === 3; 
         $.b === 5; // {b: 5} is wrapped on having
-        
-    );
+    });
+
     //list 
     _({2: 24, 0: 1, 1: 35}).list._[1] === 35;
 
