@@ -18,13 +18,10 @@ ex. inside ./lib subfolder
 ~~~
 
 ### html
-
-ex. inside public folder's subfolder
 ~~~html
-    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.3/losand.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.3/dsand.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.31/losand.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.31/dsand.js"></script>
 ~~~
-
 ~~~javascript
     //join
     _({a: 1}).join.a === 1;
@@ -140,7 +137,7 @@ ex. inside public folder's subfolder
         
     );
     //list 
-    _()
+    _({2: 24, 0: 1, 1: 35}).list._[1] === 35;
 
     //define is Object.defineProperties on wrapped Object
     _({a: 68}).define({
@@ -170,7 +167,7 @@ ex. inside public folder's subfolder
     //String.prototype.json get _(parsed_object)
     _({a: 3}).json.json._.a === 3
 ~~~
-## Only node.js
+## Only node.js...
 ~~~javascript
     const EETest = function () {
         EventEmitter.call(this);

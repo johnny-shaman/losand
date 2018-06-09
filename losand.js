@@ -119,7 +119,7 @@
         list: {
             configurable: true,
             get () {
-                return this.bind(o => (o).drop(this.keys._.filter((v, k) => !isNaN(Number(k)))));
+                return this.bind(o => _(o).drop(this.keys._.filter((v, k) => !isNaN(Number(k)))));
             }
         },
         json: {
