@@ -23,7 +23,7 @@
             }
         });
     };
-    
+
     Object.defineProperties(_.prototype, {
         _: {
             configurable: true,
@@ -147,17 +147,25 @@
         }
     });
 
+    _.maybe = function (v, re) {
+        return (v !== undefined || v !== null) ? _.just(v, re) : _.none(re);
+    };
+
+    _.just = _.bind();
+    _.just.prototype = _(_.prototype).create({
+        constructor: {
+            configurable: true,
+            writable: true,
+            value: _.just
+        }
+    });
+
     _.none = function (re) {
         return _(_.none.prototype).create({
         v: {
             configurable: true,
             writable: true,
             value: {}
-        },
-        k: {
-            configurable: true,
-            writable: true,
-            value: undefined
         },
         re: {
             configurable: true,
