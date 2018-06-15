@@ -128,7 +128,7 @@
             set (v) {
                 return this.n.innerText = v;
             }
-        },
+        }
     });
 
     $.TABLE = function () {};
@@ -142,7 +142,7 @@
             configurable: true,
             value (n) {
                 n.each(v => $(this.n.insertRow.call(this.n)).$(v));
-                return this.n;
+                return this;
             }
         },
         cell: {
@@ -188,7 +188,7 @@
             configurable: true,
             value (n) {
                 n.each(v => $(this.n.insertCell.call(this.n)).$(v));
-                return this.n;
+                return this;
             }
         },
         each: {
@@ -228,16 +228,16 @@
                     _(n).keys._.map(k => new Option(k, n[k])) :
                     n.map(v => v.constructor === Option ? v : new Option(v, v))
                 ).forEach(v => this.n.options.add.call(this.n, v));
-                return this.n;
+                return this;
             }
         },
         now: {
             configurable: true,
             get () {
-                return this.value.json;
+                return this.n.value.json;
             },
             set (v) {
-                this.value = v;
+                this.n.value = v;
                 v = void 0;
             }
         }
@@ -254,7 +254,7 @@
             configurable: true,
             value (a) {
                 this.n.append.call(this.n, ...a.map(v => v.constructor === Array ? ul.$(v) : li.$(v)));
-                return this.n;
+                return this;
             }
         }
     })._;
@@ -270,7 +270,7 @@
             configurable: true,
             value (a) {
                 this.n.append.call(this.n, ...a.map(v => v.constructor === Array ? ol.$(v) : li.$(v)));
-                return this.n;
+                return this;
             }
         }
     })._;
@@ -310,10 +310,10 @@
         now: {
             configurable: true,
             get () {
-                return this.value.json;
+                return this.n.value;
             },
             set (v) {
-                this.value = v;
+                this.n.value = v;
                 v = void 0;
             }
         }
