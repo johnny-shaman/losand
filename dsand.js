@@ -254,7 +254,7 @@
             configurable: true,
             value (a) {
                 this.n.append.call(this.n, ...a.map(v => v.constructor === Array ? ul.$(v) : li.$(v)));
-                return this;
+                return this.n;
             }
         }
     })._;
@@ -270,7 +270,7 @@
             configurable: true,
             value (a) {
                 this.n.append.call(this.n, ...a.map(v => v.constructor === Array ? ol.$(v) : li.$(v)));
-                return this;
+                return this.n;
             }
         }
     })._;
