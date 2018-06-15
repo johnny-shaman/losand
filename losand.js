@@ -18,11 +18,13 @@
             join: {
                 configurable: true,
                 get () {
-                    return this.v.valueOf();
+                    return this.v !== undefined ||  this.v !== null ? this.v.valueOf() : this.v;
                 }
             }
         });
     };
+
+    _.version = "0.0.4";
 
     Object.defineProperties(_.prototype, {
         _: {
@@ -46,13 +48,13 @@
         map: {
             configurable: true,
             value (f, ...v) {
-                return _(f(this.v, ...v), this);
+                return this.v !== undefined ||  this.v !== null ? _(f(this.v, ...v), this) : this;
             }
         },
         fit: {
             configurable: true,
             value (f, ...v) {
-                return _(f(...v, this.v), this);
+                return this.v !== undefined ||  this.v !== null ? _(f(...v, this.v), this) : this;
             }
         },
         bind: {
@@ -146,73 +148,6 @@
             }
         }
     });
-
-    _.maybe = function (v, re) {
-        return (v !== undefined || v !== null) ? _.just(v, re) : _.none(re);
-    };
-
-    _.just = _.bind();
-    _.just.prototype = _(_.prototype).create({
-        constructor: {
-            configurable: true,
-            writable: true,
-            value: _.just
-        }
-    });
-
-    _.none = function (re) {
-        return _(_.none.prototype).create({
-        v: {
-            configurable: true,
-            writable: true,
-            value: {}
-        },
-        re: {
-            configurable: true,
-            get () {
-                return re;
-            }
-        },
-        join: {
-            configurable: true,
-            get () {
-                return undefined;
-            }
-        }
-        })._;
-    };
-
-    _.none.prototype = _(_.prototype).create({
-        constructor: {
-            configurable:true,
-            writable: true,
-            value: _.none
-        },
-        $: {
-            configurable: true,
-            value (f, ...v) {
-                return this;
-            }
-        },
-        $$: {
-            configurable: true,
-            value (f, ...v) {
-                return this;
-            }
-        },
-        map: {
-            configurable: true,
-            value (f, ...v) {
-                return this;
-            }
-        },
-        fit: {
-            configurable: true,
-            value (f, ...v) {
-                return this;
-            }
-        },
-    })._;
 
     _(Array.prototype).define({
         each: {

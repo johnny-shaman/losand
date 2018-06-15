@@ -280,69 +280,6 @@ describe("test of is", function () {
     );
 
     it(
-        "_.none().join return undefined",
-        () => expect(
-            _.none(c).re
-        ).toBe(
-            c
-        )
-    );
-
-    it(
-        "_.none().join return undefined",
-        () => expect(
-            _.none({}).join
-        ).toBe(
-            undefined
-        )
-    );
-
-    it(
-        "_.none()._ return undefined",
-        () => expect(
-            _.none({})._
-        ).toBe(
-            undefined
-        )
-    );
-
-    it(
-        "_.none({}).map return _.none({}) and isn't to do any more",
-        () => expect(
-            _.none({}).map(k).constructor
-        ).toBe(
-            _.none
-        )
-    );
-
-    it(
-        "_.none({}).map return _.none({}) and isn't to do any more",
-        () => expect(
-            _.none({}).fit(k).constructor
-        ).toBe(
-            _.none
-        )
-    );
-
-    it(
-        "_.none({}).$ return _.none({}) and isn't to do any more",
-        () => expect(
-            _.none({}).$(k).constructor
-        ).toBe(
-            _.none
-        )
-    );
-
-    it(
-        "_.none({}).$$ return _.none({}) and isn't to do any more",
-        () => expect(
-            _.none({}).$$(k).constructor
-        ).toBe(
-            _.none
-        )
-    );
-
-    it(
         "Array.prototype.each === Array.prototype.forEach",
         () => expect(
             ary.each
