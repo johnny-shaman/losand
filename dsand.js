@@ -224,7 +224,7 @@
         $: {
             configurable: true,
             value (n) {
-                (n.constructor = Object ?
+                (n.constructor === Object ?
                     _(n).keys._.map(k => new Option(k, n[k])) :
                     n.map(v => v.constructor === Option ? v : new Option(v, v))
                 ).forEach(v => this.n.options.add.call(this.n.options, v));
@@ -403,9 +403,9 @@
         form:       {get: () => $(document.createElement("form"))},
         label:      {get: () => $(document.createElement("label"))},
         input:      {get: () => $(document.createElement("input"))},
-        checkbox:   {get: () => $(document.createElement("input")._({type: "checkbox"}))},
-        text:       {get: () => $(document.createElement("input")._({type: "text"}))},
-        radio:      {value: (n) => $(document.createElement("input")._({type: "radio", name: n}))},
+        checkbox:   {get: () => $(document.createElement("input"))._({type: "checkbox"})},
+        text:       {get: () => $(document.createElement("input"))._({type: "text"})},
+        radio:      {value: (n) => $(document.createElement("input"))._({type: "radio", name: n})},
         textarea:   {get: () => $(document.createElement("textarea"))},
         button:     {get: () => $(document.createElement("button"))},
         img:        {get: () => $(document.createElement("img"))},

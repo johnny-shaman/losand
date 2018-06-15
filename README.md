@@ -246,12 +246,12 @@ body
         //input
         select.$({test: 0, test1: 1}),
         select.$([3,4,5,6,7]),
-        label.$(checkbox.$("test"), "test"),
-        label.$(checkbox.$("test1"), "test1"),
-        label.$(radio("p1").$("test1-1"), "test1-1"),
-        label.$(radio("p1").$("test1-2"), "test1-2"),
-        label.$(radio("p2").$("test2-1"), "test2-1"),
-        label.$(radio("p2").$("test2-2"), "test2-2")
+        label.$(checkbox, "test"),
+        label.$(checkbox, "test1"),
+        label.$(radio("p1"), "test1-1"),
+        label.$(radio("p1"), "test1-2"),
+        label.$(radio("p2"), "test2-1"),
+        label.$(radio("p2"), "test2-2")
     )
     ._({
         "#": "today",
