@@ -227,7 +227,7 @@
                 (n.constructor = Object ?
                     _(n).keys._.map(k => new Option(k, n[k])) :
                     n.map(v => v.constructor === Option ? v : new Option(v, v))
-                ).forEach(v => this.n.options.add.call(this.n, v));
+                ).forEach(v => this.n.options.add.call(this.n.options, v));
                 return this;
             }
         },

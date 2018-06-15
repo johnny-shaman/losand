@@ -24,7 +24,7 @@
         });
     };
 
-    _.version = "0.0.491";
+    _.version = "0.0.5";
 
     Object.defineProperties(_.prototype, {
         _: {

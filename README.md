@@ -19,8 +19,8 @@ ex. inside ./lib subfolder
 
 ### html
 ~~~html
-    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.491/losand.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.491/dsand.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.5/losand.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.5/dsand.js"></script>
 ~~~
 ~~~javascript
     //join
@@ -222,13 +222,36 @@ body
             borderBottom: "1px solid #888888"
         }),
         p.$("losand wrapping a value on monad and like to Usage here"),
+        //link
         p.$(a._({href:"https://github.com/johnny-shaman/losand/blob/master/README.md"}).$("readme on github")),
+        //button & clicks
         p.$(button.on({
             click (e) {
                 console.log(this !== e.target); // true
                 alert("hello _(losand)._");
             }
-        }).$("click me"))
+        }).$("click me")),
+        //table
+        table.$([
+            [1,2,3],
+            [4,5,6],
+            [7,8,9]
+        ]),
+        //ul, ol
+        ul.$([
+            1,[1,[2,3]],
+            2,[4,[5,6]],
+            3,[7,[8,9]]
+        ]),
+        //input
+        select.$({test: 0, test1: 1}),
+        select.$([3,4,5,6,7]),
+        label.$(checkbox.$("test"), "test"),
+        label.$(checkbox.$("test1"), "test1"),
+        label.$(radio("p1").$("test1-1"), "test1-1"),
+        label.$(radio("p1").$("test1-2"), "test1-2"),
+        label.$(radio("p2").$("test2-1"), "test2-1"),
+        label.$(radio("p2").$("test2-2"), "test2-2")
     )
     ._({
         "#": "today",
@@ -245,6 +268,4 @@ $._("#today").$(p.$("append"));
 
 //remove Selected Query
 $._("#today").$(null);
-
-//
 ~~~
