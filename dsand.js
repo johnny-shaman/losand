@@ -253,7 +253,7 @@
         $: {
             configurable: true,
             value (a) {
-                this.n.append.call(this.n, ...a.map(v => v.constructor === Array ? ul.$(v) : li.$(v)));
+                this.n.append.call(this.n, ...a.map(v => v.constructor === Array ? ul.$(v) : li.$(v.n)));
                 return this.n;
             }
         }
@@ -269,7 +269,7 @@
         $: {
             configurable: true,
             value (a) {
-                this.n.append.call(this.n, ...a.map(v => v.constructor === Array ? ol.$(v) : li.$(v)));
+                this.n.append.call(this.n, ...a.map(v => v.constructor === Array ? ol.$(v) : li.$(v.n)));
                 return this.n;
             }
         }
