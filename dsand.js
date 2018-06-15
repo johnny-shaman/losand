@@ -253,8 +253,8 @@
         $: {
             configurable: true,
             value (a) {
-                this.n.append.call(this.n, ...a.map(v => v.constructor === Array ? ul.$(v) : li.$(v.n)));
-                return this.n;
+                $.prototype.$.call(this, ...a.map(v => v.constructor === Array ? ul.$(v) : li.$(v)));
+                return this;
             }
         }
     })._;
@@ -269,8 +269,8 @@
         $: {
             configurable: true,
             value (a) {
-                this.n.append.call(this.n, ...a.map(v => v.constructor === Array ? ol.$(v) : li.$(v.n)));
-                return this.n;
+                $.prototype.$.call(this, ...a.map(v => v.constructor === Array ? ol.$(v) : li.$(v)));
+                return this;
             }
         }
     })._;
