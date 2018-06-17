@@ -6,7 +6,7 @@
         ul
         ol
         li
-        EventTarget
+        optgroup
 */
 
 (() => {
@@ -80,14 +80,14 @@
         on: {
             configurable: true,
             value (d, ...a) {
-                a.length !== 0 ? a.forEach(v => this.n.on.call(this.n, v, d)) : _(d).keys._.forEach(k => this.n.on.call(this.n, k, d));
+                a.length !== 0 ? a.forEach(v => this.n.addEventListener.call(this.n, v, d)) : _(d).keys._.forEach(k => this.n.addEventListener.call(this.n, k, d));
                 return this;
             }
         },
         off: {
             configurable: true,
             value (d, ...a) {
-                a.length !== 0 ? a.forEach(v => this.n.off.call(this.n, v, d)) : _(d).keys._.forEach(k => this.n.off.call(this.n, k, d));
+                a.length !== 0 ? a.forEach(v => this.n.removeEventListener.call(this.n, v, d)) : _(d).keys._.forEach(k => this.n.removeEventListener.call(this.n, k, d));
                 return this;
             }
         },
@@ -225,9 +225,14 @@
             configurable: true,
             value (n) {
                 (n.constructor === Object ?
-                    _(n).keys._.map(k => new Option(k, n[k])) :
+                    _(n).keys._.map(k => n[k].constructor === Object || n[k].constructor === Array ?
+                    _(n[k]).$(v => {
+                        $.prototype.$.call(this, optgroup.$(k));
+                        this.$.call(this, n[k]);
+                    }) :
+                    new Option(k, n[k])) :
                     n.map(v => v.constructor === Option ? v : new Option(v, v))
-                ).forEach(v => this.n.options.add.call(this.n.options, v));
+                ).each(v => this.n.options.add.call(this.n.options, v));
                 return this;
             }
         },
@@ -282,13 +287,20 @@
             writable: true,
             value: $.INPUT
         },
+        $: {
+            configurable: true,
+            value (v) {
+                v === null ? $.prototype.$.call(this, v) : this.now = v;
+                return this;
+            }
+        },
         now: {
             configurable: true,
             get () {
                 return (
                     (this.n.type === "checkbox" || this.n.type === "radio") ?
                     this.n.checked :
-                    this.n.value.json
+                    this.n.value
                 );
             },
             set (v) {
@@ -307,6 +319,13 @@
             writable: true,
             value: $.TEXTAREA
         },
+        $: {
+            configurable: true,
+            value (v) {
+                v === null ? $.prototype.$.call(this, v) : this.now = v;
+                return this;
+            }
+        },
         now: {
             configurable: true,
             get () {
@@ -319,39 +338,33 @@
         }
     })._;
 
-    _(EventTarget.prototype).define({
-        on: {
-            configurable: true,
-            get () {
-                return this.addEventListener;
-            }
-        },
-        off: {
-            configurable: true,
-            get () {
-                return this.removeEventListener;
-            }
-        }
-    });
-
-    this === window && _(Object.prototype).define({
-        handleEvent: {
+    $.IMG = function () {};
+    $.IMG.prototype = _($.prototype).create({
+        constructor: {
             configurable: true,
             writable: true,
-            value(e) {
-                this[e.type].constructor === Object ? 
-                this[e.type][
-                    JSON.parse(e.data).type ?
-                    JSON.parse(e.data).type :
-                    this[e.type].type
-                ].call(this, e) :
-                this[e.type](e);
-                e = null;
+            value: $.TEXTAREA
+        },
+        $: {
+            configurable: true,
+            value (v) {
+                v === null ? $.prototype.$.call(this, v) : this.now = v;
+                return this;
+            }
+        },
+        now: {
+            configurable: true,
+            get () {
+                return this.src;
+            },
+            set (v) {
+                this.src = v;
+                v = void 0;
             }
         }
     });
 
-    this === window && _(window)
+    _(window)
     .draw({
         get html () {
             return document.documentElement;
@@ -413,11 +426,12 @@
         map:        {get: () => $(document.createElement("map"))},
         iframe:     {get: () => $(document.createElement("iframe"))},
         select:     {get: () => $(document.createElement("select"))},
+        option:     {get: () => $(document.createElement("option"))},
+        optgroup:   {get: () => $(document.createElement("optgroup"))},
         a:          {get: () => $(document.createElement("a"))},
         em:         {get: () => $(document.createElement("em"))},
         strong:     {get: () => $(document.createElement("strong"))},
         span:       {get: () => $(document.createElement("span"))}
     });
-
     this.$ = $;
 })();

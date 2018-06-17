@@ -148,6 +148,40 @@
             }
         }
     });
+    
+    this.constructor !== Object && _(_.prototype).define({
+        on: {
+            configurable: true,
+            value (d, ...a) {
+                a.length !== 0 ? a.forEach(v => d.addEventListener(v, this.v)) : this.keys._.forEach(k => d.addEventListener(k, this.v));
+                return this;
+            }
+        },
+        off: {
+            configurable: true,
+            value (d, ...a) {
+                a.length !== 0 ? a.forEach(v => d.removeEventListener(v, this.v)) : this.keys._.forEach(k => d.removeEventListener(k, this.v));
+                return this;
+            }
+        },
+    });
+    
+    this.constructor !== Object && _(Object.prototype).define({
+        handleEvent: {
+            configurable: true,
+            writable: true,
+            value(e) {
+                this[e.type].constructor === Object ? 
+                this[e.type][
+                    JSON.parse(e.data).type ?
+                    JSON.parse(e.data).type :
+                    this[e.type].type
+                ].call(this, e) :
+                this[e.type](e);
+                e = null;
+            }
+        }
+    });
 
     _(Array.prototype).define({
         each: {

@@ -19,8 +19,8 @@ ex. inside ./lib subfolder
 
 ### html
 ~~~html
-    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.5/losand.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.5/dsand.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.51/losand.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.51/dsand.js"></script>
 ~~~
 ~~~javascript
     //join
@@ -246,6 +246,14 @@ body
         //input
         select.$({test: 0, test1: 1}),
         select.$([3,4,5,6,7]),
+        select.$({
+            testgrp: {
+                test: 0,
+                test1: 1
+            },
+            testgrp1:
+            [3,4,5,6,7]
+        }),
         label.$(checkbox, "test"),
         label.$(checkbox, "test1"),
         label.$(radio("p1"), "test1-1"),
