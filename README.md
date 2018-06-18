@@ -167,7 +167,8 @@ ex. inside ./lib subfolder
     //String.prototype.json get _(parsed_object)
     _({a: 3}).json.json._.a === 3
 ~~~
-## Only node.js...
+## Event driven development
+### Only node.js...
 ~~~javascript
     const EETest = function () {
         EventEmitter.call(this);
@@ -185,7 +186,11 @@ ex. inside ./lib subfolder
 
     //addLitener
     _(eeTest).on({
-        "get": () => {},
+        a: 3,
+        "get" () {
+            this.a === 3 // true
+            this.put() // can call it
+        },
         "put": () => {},
         "post": () => {},
         "delete": () => {}
@@ -193,10 +198,32 @@ ex. inside ./lib subfolder
 
     //addOnce
     _(eeTest).once({
-        "get": () => {},
+        b: 10,
+        "get" () {
+            this.b === 10 // true
+            this.put() // can call it
+        },
         "put": () => {},
         "post": () => {},
         "delete": () => {}
+    })
+~~~
+## worker or browser
+~~~javascript
+    //addLitener
+    _(EventTarget).on({
+        "click" () {},
+        "dragstart" () {},
+        "dragend" () {},
+        "message" () {},
+    })
+
+    //addOnce
+    _(EventTarget).off({
+        "click" () {},
+        "dragstart" () {},
+        "dragend" () {},
+        "message" () {},
     })
 ~~~
 ## Browser Only!!
@@ -224,6 +251,8 @@ body
         p.$("losand wrapping a value on monad and like to Usage here"),
         //link
         p.$(a._({href:"https://github.com/johnny-shaman/losand/blob/master/README.md"}).$("readme on github")),
+        //img
+        p.$(img.$("https://www.google.co.jp/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png")),
         //button & clicks
         p.$(button.on({
             click (e) {
@@ -259,7 +288,7 @@ body
         label.$(radio("p1"), "test1-1"),
         label.$(radio("p1"), "test1-2"),
         label.$(radio("p2"), "test2-1"),
-        label.$(radio("p2"), "test2-2")
+        label.$(radio("p2"), "test2-2"),
     )
     ._({
         "#": "today",
