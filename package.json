@@ -1,6 +1,6 @@
 {
   "name": "losand",
-  "version": "0.0.71",
+  "version": "0.0.72",
   "description": "losand is a monad on Javascript",
   "main": "losand.js",
   "scripts": {
