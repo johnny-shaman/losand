@@ -25,6 +25,7 @@
         })._;
     };
 
+    $.version = _.version;
     $.$  = s => $(document.createElement(s));
     $._  = s => $(document.querySelector(s));
     $.__ = s => $(document.querySelectorAll(s));
@@ -227,7 +228,7 @@
                 (n.constructor === Object ?
                     _(n).keys._.map(k => n[k].constructor === Object || n[k].constructor === Array ?
                     _(n[k]).$(v => {
-                        $.prototype.$(this, optgroup.$(k));
+                        this.n.append.call(this.n, optgroup.$(k));
                         this.$.call(this, n[k]);
                     }) :
                     new Option(k, n[k])) :
