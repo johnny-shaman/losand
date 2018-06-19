@@ -24,7 +24,7 @@
         });
     };
 
-    _.version = "losand@0.0.74";
+    _.version = "losand@0.0.75";
 
     Object.defineProperties(_.prototype, {
         _: {

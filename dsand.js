@@ -225,15 +225,21 @@
         $: {
             configurable: true,
             value (n) {
-                (n.constructor === Object ?
-                    _(n).keys._.map(k => n[k].constructor === Object || n[k].constructor === Array ?
-                    _(n[k]).$(v => {
-                        this.n.append.call(this.n, optgroup.$(k));
-                        this.$.call(this, n[k]);
-                    }) :
-                    new Option(k, n[k])) :
-                    n.map(v => v.constructor === Option ? v : new Option(v, v))
-                ).each(v => this.n.options.add.call(this.n.options, v));
+                _(a => _(v => this.n.options.add.call(this.n.options, v)).$(f => (
+                    a.constructor === Object ?
+                    _(a).keys._.each(k => f(new Option(k, a[k]))) :
+                    a.map(v => (
+                        v.constructor === Option ?
+                        f(v) :
+                        f(new Option(v, v))
+                    ))
+                ))).$(f => _(n).keys._.map(k => (
+                    n[k].constructor === Object || n[k].constructor === Array ?
+                    _(n[k])
+                    .$(v => this.n.append.call(this.n, optgroup.$(k)))
+                    .map(o => f(o)) :
+                    f(n)
+                )));
                 return this;
             }
         },
