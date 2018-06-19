@@ -236,7 +236,7 @@
                 ))).$(f => _(n).keys._.map(k => (
                     n[k].constructor === Object || n[k].constructor === Array ?
                     _(n[k])
-                    .$(v => this.n.append.call(this.n, optgroup.$(k)))
+                    .$(v => $.prototype.$.call(this, optgroup.$(k)))
                     .map(o => f(o)) :
                     f(n)
                 )));
