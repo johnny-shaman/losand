@@ -227,7 +227,7 @@
                 (n.constructor === Object ?
                     _(n).keys._.map(k => n[k].constructor === Object || n[k].constructor === Array ?
                     _(n[k]).$(v => {
-                        $.prototype.$.call(this, optgroup.$(k));
+                        $.prototype.$(this, optgroup.$(k));
                         this.$.call(this, n[k]);
                     }) :
                     new Option(k, n[k])) :
@@ -343,7 +343,7 @@
         constructor: {
             configurable: true,
             writable: true,
-            value: $.TEXTAREA
+            value: $.IMG
         },
         $: {
             configurable: true,
