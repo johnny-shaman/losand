@@ -10,6 +10,7 @@
 */
 
 (() => {
+    
     let $ = function (n) {
         return _(
             (n.tagName !== undefined && $[n.tagName]) ?
@@ -225,21 +226,18 @@
         $: {
             configurable: true,
             value (n) {
-                _(a => _(v => this.n.options.add.call(this.n.options, v)).$(f => (
-                    a.constructor === Object ?
-                    _(a).keys._.each(k => f(new Option(k, a[k]))) :
-                    a.map(v => (
-                        v.constructor === Option ?
-                        f(v) :
-                        f(new Option(v, v))
-                    ))
-                ))).$(f => _(n).keys._.map(k => (
-                    n[k].constructor === Object || n[k].constructor === Array ?
-                    _(n[k])
-                    .$(v => $.prototype.$.call(this, optgroup.$(k)))
-                    .map(o => f(o)) :
-                    f(n)
-                )));
+                _(
+                    n.constructor === Object ? 
+                    _(n).keys._.map(k => (
+                        n[k].constructor === Array || n[k].constructor === Object ?
+                        optgroup._({label: k}).$(n[k]) :
+                        new Option(k, n[k]))
+                    ) : (
+                        n.constructor === Array ?
+                        n.map(v => v.constructor === Option ? v : new Option(v, v)) :
+                        this.now = n
+                    )
+                ).$(v => v.constructor === Array && v.forEach(v => $.prototype.$.call(this, v)));
                 return this;
             }
         },
@@ -251,6 +249,26 @@
             set (v) {
                 this.n.value = v;
                 v = void 0;
+            }
+        }
+    })._;
+
+    $.OPTGROUP = function () {};
+    $.OPTGROUP.prototype = _($.prototype).create({
+        constructor: {
+            configurable: true,
+            writable: true,
+            value: $.OPTGROUP
+        },
+        $: {
+            configurable: true,
+            value (n) {
+                (
+                    n.constructor === Object ? 
+                    _(n).keys._.map(k => new Option(k, n[k])) :
+                    n.map(v => v.constructor === Option ? v : new Option(v, v))
+                ).forEach(v => $.prototype.$.call(this, v));
+                return this;
             }
         }
     })._;
