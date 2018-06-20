@@ -10,7 +10,6 @@
 */
 
 (() => {
-    
     let $ = function (n) {
         return _(
             (n.tagName !== undefined && $[n.tagName]) ?
