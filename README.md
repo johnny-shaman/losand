@@ -19,8 +19,8 @@ ex. inside ./lib subfolder
 
 ### html
 ~~~html
-    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.777/losand.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/losand@0.0.777/dsand.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/losand@0.1.1/losand.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/losand@0.1.1/dsand.js"></script>
 ~~~
 ~~~javascript
     //join
