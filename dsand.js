@@ -401,7 +401,7 @@
         },
         env: {
             get https () {
-                return location.https;
+                return location.protocol === "https:";
             },
             get here () {
                 return location.hostname;

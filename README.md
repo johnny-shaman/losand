@@ -1,26 +1,24 @@
-# losand
-## losand is a monad imprementation on any Javascript
-
+# \_(losand).\_
+## \_(losand).\_ is a monad imprementation on any Javascript
 ## Usage
 
-This library's public folder can be determining html and misc folder
-
 ### node
-~~~javascript
-    let _ = require("losand");
+~~~bash
+npm install losand
 ~~~
 
+~~~javascript
+const _ = require("losand");
+~~~
 ### worker
-
 ex. inside ./lib subfolder
 ~~~javascript
-    importScripts("./lib/losand.js");
+importScripts("./lib/losand.js");
 ~~~
-
 ### html
 ~~~html
-    <script src="https://cdn.jsdelivr.net/npm/losand@0.1.1/losand.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/losand@0.1.1/dsand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.1.2/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.1.2/dsand.js"></script>
 ~~~
 ~~~javascript
     //join
