@@ -95,12 +95,9 @@
         $: {
             configurable: true,
             value (...n) {
-                (n[0] !== null ? (
-                    n === undefined ?
-                    void 0 :
-                    this.n.append.call(this.n, ...n.map(v => v instanceof $ ? v.n : v))
-                ) :
-                this.n.remove.call(this.n));
+                n[0] !== undefined ? 
+                this.n.append.call(this.n, ...n.map(v => v instanceof $ ? v.n : v)) :
+                this.n.remove.call(this.n);
                 return this;
             }
         },
@@ -112,6 +109,18 @@
                     $(this.n.children) :
                     $(this.n.children[0])
                 );
+            }
+        },
+        outer: {
+            configurable: true,
+            get () {
+                return $(this.n.parentNode);
+            }
+        },
+        inner: {
+            configurable: true,
+            get () {
+                return $(this.n.children);
             }
         },
         each: {
@@ -448,6 +457,7 @@
         img:        {get: () => $(document.createElement("img"))},
         area:       {get: () => $(document.createElement("area"))},
         map:        {get: () => $(document.createElement("map"))},
+        canvas:     {get: () => $(document.createElement("canvas"))},
         iframe:     {get: () => $(document.createElement("iframe"))},
         select:     {get: () => $(document.createElement("select"))},
         option:     {get: () => $(document.createElement("option"))},

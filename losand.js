@@ -1,3 +1,8 @@
+/*
+    global
+    Node
+    $
+*/
 (() => {
     Object.values = Object.values || function (o) {
         return Object.keys(o).map(k => o[k]);
@@ -24,7 +29,7 @@
         });
     };
 
-    _.version = "losand@0.1.2";
+    _.version = "losand@0.1.3";
 
     Object.defineProperties(_.prototype, {
         _: {
@@ -171,6 +176,8 @@
             configurable: true,
             writable: true,
             value(e) {
+                e.$ = Node && e.target instanceof Node && $(e.target);
+                e._ = e.data && e.data.json;
                 this[e.type].constructor === Object ? 
                 this[e.type][
                     JSON.parse(e.data).type ?
