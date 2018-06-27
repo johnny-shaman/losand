@@ -397,6 +397,31 @@
         }
     })._;
 
+    $.LABEL = function () {};
+    $.LABEL.prototype = _($.prototype).create({
+        constructor: {
+            configurable: true,
+            writable: true,
+            value: $.IMG
+        },
+        $: {
+            configurable: true,
+            value (v) {
+                v === null ? $.prototype.$.call(this, v) : this.now = v;
+                return this;
+            }
+        },
+        now: {
+            configurable: true,
+            get () {
+                return this.pick.now;
+            },
+            set (v) {
+                this.pick.now = v;
+            }
+        }
+    })._;
+
     _(window)
     .draw({
         get html () {

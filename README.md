@@ -17,8 +17,8 @@ importScripts("./lib/losand.js");
 ~~~
 ### html
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@0.1.3/losand.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/losand@0.1.3/dsand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.1.4/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.1.4/dsand.js"></script>
 ~~~
 ~~~javascript
 //join
@@ -302,5 +302,5 @@ body
 $._("#today").$(p.$("append"));
 
 //remove Selected Query
-$._("#today").$(null);
+$._("#today").$();
 ~~~
