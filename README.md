@@ -17,8 +17,8 @@ importScripts("./lib/losand.js");
 ~~~
 ### html
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@0.1.5/losand.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/losand@0.1.5/dsand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.1.6/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.1.6/dsand.js"></script>
 ~~~
 ~~~javascript
 //join
