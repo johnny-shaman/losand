@@ -330,16 +330,52 @@
         now: {
             configurable: true,
             get () {
-                return (
-                    (this.n.type === "checkbox" || this.n.type === "radio") ?
-                    this.n.checked :
-                    this.n.value
+                return _(this).$(o => (
+                    o.n.type === "checkbox" || o.n.type === "radio") ?
+                    o[o.n.type] :
+                    o.n.value
                 );
             },
             set (v) {
-                (this.n.type === "checkbox" || this.n.type === "radio") ?
+                _(this).$(o => (
+                    o.n.type === "checkbox" || o.n.type === "radio") ?
+                    o[o.n.type] = v:
+                    o.n.value = v
+                );
+                v = void 0;
+            }
+        },
+        radio: {
+            configurable: true,
+            get () {
+                return _(this).$(
+                    o => _($.__(`[name="${o.n.name}"]`).n)
+                    .list
+                    .map(
+                        a => a.
+                        filter(r => r.checked)
+                        .pop()
+                        .value
+                    )._
+                );
+            },
+            set (v) {
+                v.constructor === Boolean ?
                 this.n.checked = v :
-                this.n.value = v;
+                _(this).$(o => {
+                    $._(`[name*="${o.n.name}"][value*="${v}"]`).n.checked = true;
+                    $.__(`[name*="${o.n.name}"]:not[value*="${v}"]`).each(d => d.checked = false);
+                });
+                v = void 0;
+            }
+        },
+        check: {
+            configurable: true,
+            get () {
+                return this.n.checked;
+            },
+            set (v) {
+                this.n.checked = v;
                 v = void 0;
             }
         }
@@ -475,6 +511,7 @@
         label:      {get: () => $(document.createElement("label"))},
         input:      {get: () => $(document.createElement("input"))},
         checkbox:   {get: () => $(document.createElement("input"))._({type: "checkbox"})},
+        range:      {get: () => $(document.createElement("input"))._({type: "range"})},
         text:       {get: () => $(document.createElement("input"))._({type: "text"})},
         radio:      {value: (n) => $(document.createElement("input"))._({type: "radio", name: n})},
         textarea:   {get: () => $(document.createElement("textarea"))},
