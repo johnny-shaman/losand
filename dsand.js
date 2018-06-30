@@ -52,7 +52,6 @@
                         delete _o["."];
                         delete _o.$;
                         delete _o.on;
-                        return _o;
                     })
                     .give($.setAttribute.bind($))
                 );
@@ -323,25 +322,20 @@
         $: {
             configurable: true,
             value (v) {
-                v === null ? $.prototype.$.call(this, v) : this.now = v;
-                return this;
+                return _(this).$(o => v === null ? $.prototype.$.call(o, v) : o.now = v)._;
             }
         },
         now: {
             configurable: true,
             get () {
-                return _(this).$(o => (
-                    o.n.type === "checkbox" || o.n.type === "radio") ?
-                    o[o.n.type] :
-                    o.n.value
-                );
+                return _(this).map(o => (
+                    (o.n.type === "checkbox" || o.n.type === "radio") ? o[o.n.type] : o.n.value
+                ))._;
             },
             set (v) {
                 _(this).$(o => (
-                    o.n.type === "checkbox" || o.n.type === "radio") ?
-                    o[o.n.type] = v:
-                    o.n.value = v
-                );
+                    (o.n.type === "checkbox" || o.n.type === "radio") ? o[o.n.type] = v : o.n.value = v
+                ));
                 v = void 0;
             }
         },
@@ -360,12 +354,9 @@
                 );
             },
             set (v) {
-                v.constructor === Boolean ?
-                this.n.checked = v :
-                _(this).$(o => {
-                    $._(`[name*="${o.n.name}"][value*="${v}"]`).n.checked = true;
-                    $.__(`[name*="${o.n.name}"]:not[value*="${v}"]`).each(d => d.checked = false);
-                });
+                v.constructor === Boolean
+                ? this.n.checked = v
+                : _(this).$(o => $._(`[name*="${o.n.name}"][value*="${v}"]`).n.checked = true);
                 v = void 0;
             }
         },
@@ -513,8 +504,7 @@
         checkbox:   {get: () => $(document.createElement("input"))._({type: "checkbox"})},
         range:      {get: () => $(document.createElement("input"))._({type: "range"})},
         text:       {get: () => $(document.createElement("input"))._({type: "text"})},
-        radio:      {value: n => v => $(document.createElement("input"))._({type: "radio", name: n, value: v})},
-        radio_:     {get: () => $(document.createElement("input"))._({type: "radio"})},
+        radio:      {value: (n, v) => $(document.createElement("input"))._({type: "radio", name: n, value: v})},
         textarea:   {get: () => $(document.createElement("textarea"))},
         button:     {get: () => $(document.createElement("button"))},
         img:        {get: () => $(document.createElement("img"))},

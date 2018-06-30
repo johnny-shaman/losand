@@ -19,19 +19,19 @@
                 configurable: true,
                 writable: true,
                 value: re
-            },
-            join: {
-                configurable: true,
-                get () {
-                    return this.v !== undefined ||  this.v !== null ? this.v.valueOf() : this.v;
-                }
             }
         });
     };
 
-    _.version = "losand@0.1.6";
+    _.version = "losand@0.1.7";
 
     Object.defineProperties(_.prototype, {
+        join: {
+            configurable: true,
+            get () {
+                return this.v !== undefined ||  this.v !== null ? this.v.valueOf() : this.v;
+            }
+        },
         _: {
             configurable: true,
             get () {

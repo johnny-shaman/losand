@@ -17,8 +17,8 @@ importScripts("./lib/losand.js");
 ~~~
 ### html
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@0.1.6/losand.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/losand@0.1.6/dsand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.1.7/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.1.7/dsand.js"></script>
 ~~~
 ~~~javascript
 //join
@@ -283,10 +283,10 @@ body
         }),
         label.$(checkbox, "test"),
         label.$(checkbox, "test1"),
-        label.$(radio("p1"), "test1-1"),
-        label.$(radio("p1"), "test1-2"),
-        label.$(radio("p2"), "test2-1"),
-        label.$(radio("p2"), "test2-2"),
+        label.$(radio("p1", 1), "test1-1"),
+        label.$(radio("p1", 2), "test1-2"),
+        label.$(radio("p2", 1), "test2-1"),
+        label.$(radio("p2", 2), "test2-2"),
     )
     ._({
         "#": "today",
