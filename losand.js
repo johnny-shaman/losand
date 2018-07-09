@@ -23,7 +23,7 @@
         });
     };
 
-    _.version = "losand@0.1.7";
+    _.version = "losand@0.1.8";
 
     Object.defineProperties(_.prototype, {
         join: {
@@ -116,6 +116,12 @@
                 return this.map($ => Object.create($.constructor.prototype, o));
             }
         },
+        depend: {
+            configurable: true,
+            value (o) {
+                return this.bind(m => _(o).create().draw(m));
+            }
+        },
         give: {
             configurable: true,
             value (f, ...v) {
@@ -134,10 +140,30 @@
             get () {
                 return JSON.stringify(this._);
             }
+        },
+        from: {
+            configurable: true,
+            get () {
+                return _(this._.prototype);
+            }
+        },
+        regulate: {
+            configurable: true,
+            value (...o) {
+                this.from.draw(...o);
+                return this;
+            }
+        },
+        descript: {
+            configurable: true,
+            value (o) {
+                this.from.define(o);
+                return this;
+            }
         }
     });
 
-    this.constructor === Object && _(_.prototype).define({
+    this.constructor === Object && _(_).descript({
         on: {
             configurable: true,
             value (d) {
@@ -154,7 +180,7 @@
         }
     });
     
-    this.constructor !== Object && _(_.prototype).define({
+    this.constructor !== Object && _(_).descript({
         on: {
             configurable: true,
             value (d, ...a) {
@@ -171,7 +197,7 @@
         },
     });
     
-    this.constructor !== Object && _(Object.prototype).define({
+    this.constructor !== Object && _(Object).descript({
         handleEvent: {
             configurable: true,
             writable: true,
@@ -190,7 +216,7 @@
         }
     });
 
-    _(Array.prototype).define({
+    _(Array).descript({
         each: {
             configurable: true,
             get () {
@@ -199,7 +225,7 @@
         }
     });
 
-    _(String.prototype).define({
+    _(String).descript({
         json: {
             configurable:true,
             get () {

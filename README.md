@@ -17,8 +17,8 @@ importScripts("./lib/losand.js");
 ~~~
 ### html
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@0.1.7/losand.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/losand@0.1.7/dsand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.1.8/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.1.8/dsand.js"></script>
 ~~~
 ~~~javascript
 //join
@@ -152,6 +152,11 @@ Object.getPrototypeOf(
 
 _(a).folk({})._.constructor.prototype === a.constructor.prototype
 
+//depend is create a new Object inherit on argumentate Object
+Object.getPrototypeOf(
+    _({}).depend(a)._
+) === a;
+
 //.give is a iterator of wrapped Object to apply on argumentate function
 _({a : 1}).give((key, val) => {
     console.log(key + ": " + val)
@@ -164,6 +169,19 @@ _({a: 1}).json === JSON.stringify({a: 1})
 
 //String.prototype.json get _(parsed_object)
 _({a: 3}).json.json._.a === 3
+
+_(Object).from._ === Object.prototype
+
+_(function () {}).regulate({
+    a : 3
+}).from._.a === 3
+
+_(function () {}).descript({
+    b : {
+        configurable: true,
+        value: 5
+    }
+}).from._.b === 5
 ~~~
 ## Event driven development
 ### Only node.js...
@@ -216,7 +234,7 @@ _(EventTarget).on({
     "message" () {},
 })
 
-//addOnce
+//removeListener
 _(EventTarget).off({
     "click" () {},
     "dragstart" () {},

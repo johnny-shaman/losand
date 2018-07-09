@@ -232,6 +232,15 @@ describe("test of is", function () {
     );
 
     it(
+        ".depend is create a new Object inherit on argumentate Object ",
+        () => expect(
+            Object.getPrototypeOf(_({}).depend(a)._)
+        ).toBe(
+            a
+        )
+    );
+
+    it(
         ".give is a iterator of wrapped Object to apply on argumentate function",
         () => expect(
             (() => {
@@ -258,6 +267,49 @@ describe("test of is", function () {
             _(a).json
         ).toBe(
             JSON.stringify(a)
+        )
+    );
+
+    it(
+        ".from is returning wrapped constructor's prototype",
+        () => expect(
+            _(EETest).from._
+        ).toBe(
+            EETest.prototype
+        )
+    );
+
+    it(
+        ".from is returning wrapped constructor's prototype",
+        () => expect(
+            _(EETest).from._
+        ).toBe(
+            EETest.prototype
+        )
+    );
+
+    it(
+        ".regulate is wrapped constructor's prototype's assigning argumentate object",
+        () => expect(
+            _(EETest).regulate({
+                regulated : 0
+            }).from._.regulated
+        ).toBe(
+            0
+        )
+    );
+
+    it(
+        ".descript is wrapped constructor's prototype's defining argumentate description",
+        () => expect(
+            _(EETest).descript({
+                descripted : {
+                    configurable: true,
+                    value: 564
+                }
+            }).from._.descripted
+        ).toBe(
+            564
         )
     );
 
