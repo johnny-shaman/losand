@@ -289,11 +289,11 @@ describe("test of is", function () {
     );
 
     it(
-        ".regulate is wrapped constructor's prototype's assigning argumentate object",
+        ".relate is wrapped constructor's prototype's assigning argumentate object",
         () => expect(
-            _(EETest).regulate({
-                regulated : 0
-            }).from._.regulated
+            _(EETest).relate({
+                related : 0
+            }).from._.related
         ).toBe(
             0
         )

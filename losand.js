@@ -23,7 +23,7 @@
         });
     };
 
-    _.version = "losand@0.1.8";
+    _.version = "losand@0.1.9";
 
     Object.defineProperties(_.prototype, {
         join: {
@@ -147,7 +147,7 @@
                 return _(this._.prototype);
             }
         },
-        regulate: {
+        relate: {
             configurable: true,
             value (...o) {
                 this.from.draw(...o);
