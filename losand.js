@@ -23,13 +23,15 @@
         });
     };
 
-    _.version = "losand@0.1.9";
+    _.version = "losand@0.2.0";
 
     Object.defineProperties(_.prototype, {
         join: {
             configurable: true,
             get () {
-                return this.v !== undefined ||  this.v !== null ? this.v.valueOf() : this.v;
+                return (this.v !== undefined && this.v !== null)
+                ? this.v.valueOf()
+                : this.v;
             }
         },
         _: {
@@ -53,13 +55,17 @@
         map: {
             configurable: true,
             value (f, ...v) {
-                return this.v !== undefined ||  this.v !== null ? _(f(this.v, ...v), this) : this;
+                return (this.v !== undefined && this.v !== null)
+                ? _(f(this.v, ...v), this)
+                : this;
             }
         },
         fit: {
             configurable: true,
             value (f, ...v) {
-                return this.v !== undefined ||  this.v !== null ? _(f(...v, this.v), this) : this;
+                return (this.v !== undefined && this.v !== null)
+                ? _(f(...v, this.v), this)
+                : this;
             }
         },
         bind: {
@@ -132,7 +138,13 @@
         list: {
             configurable: true,
             get () {
-                return this.bind(o => _(o).drop(this.keys._.filter((v, k) => !isNaN(Number(k)))));
+                return this.bind(
+                    o => _(o).drop(
+                        this.keys._.filter(
+                            (v, k) => !isNaN(Number(k))
+                        )
+                    )
+                );
             }
         },
         json: {
@@ -184,14 +196,18 @@
         on: {
             configurable: true,
             value (d, ...a) {
-                a.length !== 0 ? a.forEach(v => d.addEventListener(v, this.v)) : this.keys._.forEach(k => d.addEventListener(k, this.v));
+                a.length !== 0
+                ? a.forEach(v => d.addEventListener(v, this.v))
+                : this.keys._.forEach(k => d.addEventListener(k, this.v));
                 return this;
             }
         },
         off: {
             configurable: true,
             value (d, ...a) {
-                a.length !== 0 ? a.forEach(v => d.removeEventListener(v, this.v)) : this.keys._.forEach(k => d.removeEventListener(k, this.v));
+                a.length !== 0
+                ? a.forEach(v => d.removeEventListener(v, this.v))
+                : this.keys._.forEach(k => d.removeEventListener(k, this.v));
                 return this;
             }
         },

@@ -41,11 +41,47 @@ describe("test of is", function () {
     );
 
     it(
+        "join on null",
+        () => expect(
+            _(null).join
+        ).toBe(
+            null
+        )
+    );
+
+    it(
+        "join on undefined",
+        () => expect(
+            _(undefined).join
+        ).toBe(
+            undefined
+        )
+    );
+
+    it(
         "map is fmap (liftM)",
         () => expect(
             _(c).map(Object.assign, a)._
         ).toBe(
             c
+        )
+    );
+
+    it(
+        "map is fmap (liftM) on null",
+        () => expect(
+            _(null).map(Object.assign, a)._
+        ).toBe(
+            null
+        )
+    );
+
+    it(
+        "map is fmap (liftM) on undefined",
+        () => expect(
+            _(undefined).map(Object.assign, a)._
+        ).toBe(
+            undefined
         )
     );
 
@@ -59,7 +95,25 @@ describe("test of is", function () {
     );
 
     it(
-        "_ i join",
+        "fit is Hold IO just function's on null",
+        () => expect(
+            _(null).fit(Object.assign, c)._
+        ).toBe(
+            null
+        )
+    );
+
+    it(
+        "fit is Hold IO just function's  on undefined",
+        () => expect(
+            _(undefined).fit(Object.assign, c)._
+        ).toBe(
+            undefined
+        )
+    );
+
+    it(
+        "_ is join",
         () => expect(
             _(a)._.a
         ).toBe(
@@ -348,5 +402,4 @@ describe("test of is", function () {
             1
         )
     );
-
 });
