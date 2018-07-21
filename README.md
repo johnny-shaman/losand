@@ -151,7 +151,7 @@ Object.getPrototypeOf(
     _(a).create({})._ // Object.create(a, {})
 ) === a
 
-_(a).folk({})._.constructor.prototype === a.constructor.prototype
+_(a).other({})._.constructor.prototype === a.constructor.prototype
 
 //depend is create a new Object inherit on argumentate Object
 Object.getPrototypeOf(
@@ -171,32 +171,33 @@ _({a: 1}).json === JSON.stringify({a: 1})
 //String.prototype.json get _(parsed_object)
 _({a: 3}).json.json._.a === 3
 
+//.from map in prototype
 _(Object).from._ === Object.prototype
 
+//.relate write up prototype object on constructor
 _(function () {}).relate({
     a : 3
 }).from._.a === 3
 
+//.relate define properties mapping prototype object on constructor
 _(function () {}).descript({
     b : {
         configurable: true,
         value: 5
     }
 }).from._.b === 5
+
+//.fork is easy chaining and mixin on constructor
+Object.getPrototypeOf(_(Array).fork(function(){
+    Array.call(this);
+}).from._) === Array.prototype;
+
 ~~~
 ## Event driven development
 ### Only node.js...
 ~~~javascript
-const EETest = function () {
+const EETest = _(EventEmitter).fork(function () {
     EventEmitter.call(this)
-}
-
-EETest.prototype = _(EventEmitter.prototype).create({
-    constructor: {
-        configurable: true,
-        writable: true,
-        value: EETest
-    }
 })._
 
 const eeTest = new EETest()
