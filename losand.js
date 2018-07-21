@@ -1,7 +1,7 @@
 /*
     global
-    Node
-    $
+        Node,
+        $
 */
 (() => {
     Object.values = Object.values || function (o) {
