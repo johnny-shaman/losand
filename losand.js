@@ -23,15 +23,19 @@
         });
     };
 
-    _.version = "losand@0.2.0";
+    _.version = "losand@0.2.1";
 
     Object.defineProperties(_.prototype, {
+        valid: {
+            configurable: true,
+            get () {
+                return this.v !== undefined && this.v !== null;
+            }
+        },
         join: {
             configurable: true,
             get () {
-                return (this.v !== undefined && this.v !== null)
-                ? this.v.valueOf()
-                : this.v;
+                return this.valid ? this.v.valueOf() : this.v;
             }
         },
         _: {
@@ -55,17 +59,13 @@
         map: {
             configurable: true,
             value (f, ...v) {
-                return (this.v !== undefined && this.v !== null)
-                ? _(f(this.v, ...v), this)
-                : this;
+                return this.valid ? _(f(this.v, ...v), this) : this;
             }
         },
         fit: {
             configurable: true,
             value (f, ...v) {
-                return (this.v !== undefined && this.v !== null)
-                ? _(f(...v, this.v), this)
-                : this;
+                return this.valid ? _(f(...v, this.v), this) : this;
             }
         },
         bind: {
@@ -116,7 +116,7 @@
                 return this.map(Object.create, o);
             }
         },
-        folk: {
+        other: {
             configurable: true,
             value (o = {}) {
                 return this.map($ => Object.create($.constructor.prototype, o));
@@ -162,15 +162,26 @@
         relate: {
             configurable: true,
             value (...o) {
-                this.from.draw(...o);
-                return this;
+                return this.$($ => _($).from.draw(...o));
             }
         },
         descript: {
             configurable: true,
             value (o) {
-                this.from.define(o);
-                return this;
+                return this.$($ => _($).from.define(o));
+            }
+        },
+        fork: {
+            configurable: true,
+            value (f) {
+                return this.bind($ => _(f).draw({prototype: this.from.create({
+                    constructor: {
+                        configurable: true,
+                        writable: true,
+                        enumerable: false,
+                        value: f
+                    }
+                }).draw(f.prototype)._}));
             }
         }
     });

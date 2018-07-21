@@ -277,9 +277,9 @@ describe("test of is", function () {
     );
 
     it(
-        ".folk is create a new Object inherit on wrapped Object's ParentObject ",
+        ".other is create a new Object inherit on wrapped Object's ParentObject ",
         () => expect(
-            _(a).folk({})._.constructor.prototype
+            _(a).other({})._.constructor.prototype
         ).toBe(
             a.constructor.prototype
         )
@@ -364,6 +364,15 @@ describe("test of is", function () {
             }).from._.descripted
         ).toBe(
             564
+        )
+    );
+
+    it(
+        ".fork is argumentate constructor inherit on wrapped constructor's prototype's defining description",
+        () => expect(
+            Object.getPrototypeOf(_(EETest).fork(function(){}).from._)
+        ).toBe(
+            EETest.prototype
         )
     );
 
