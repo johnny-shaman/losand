@@ -3,6 +3,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/bb24ccbb4103dec4837f/maintainability)](https://codeclimate.com/github/johnny-shaman/losand/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/bb24ccbb4103dec4837f/test_coverage)](https://codeclimate.com/github/johnny-shaman/losand/test_coverage)
 [![Build Status](https://travis-ci.org/johnny-shaman/losand.svg?branch=master)](https://travis-ci.org/johnny-shaman/losand)
+[![npm version][npm-badge]][npm-badge-url]
+[![License][license-badge]][license-badge-url]
 ## Usage
 
 ### node
@@ -20,7 +22,7 @@ importScripts("./lib/losand.js")
 ~~~
 ### browser
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@0.2.1/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.2.2/losand.js"></script>
 ~~~
 
 ~~~javascript
@@ -124,7 +126,7 @@ _({r: 128}).keys._[0] === "r"
 //vals
 _({r: 128}).vals._[0] === 128
 
-//draw is wrapped Object assign from argumentate Object"
+//draw is wrapped Object assign from argumentate Object
 _({a: 3}).draw({b: 5}).$($ => {
     $.a === 3 // {a: 3} is wrapped on having
     $.b === 5
@@ -136,6 +138,12 @@ _({a: 3}).drop({b: 5}).$($ => {
     $.a === 3 
     $.b === 5 // {b: 5} is wrapped on having
 })
+
+//pick up of wrapped Object from arguments and other object have same inheritance
+_({a: 13, b: 24, c: 51, d: 40}).pick("a", "c")._ // {a: 13, c: 51}
+
+//omit out of wrapped Object from arguments and other object have same inheritance
+_({a: 13, b: 24, c: 51, d: 40}).omit("a", "c")._ // {b: 24, d: 40}
 
 //list 
 _({2: 24, 0: 1, 1: 35}).list._[1] === 35
