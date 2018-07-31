@@ -278,42 +278,6 @@ describe("test of losand", function () {
   );
 
   it(
-    ".only is testing to either _ or undefined",
-    () => expect(
-      _(351).only(n => n === 351)._
-    ).toBe(
-      351
-    )
-  );
-
-  it(
-    ".only is testing to either _ or undefined",
-    () => expect(
-      _(351).only(n => n === 3)._
-    ).toBe(
-      undefined
-    )
-  );
-
-  it(
-    ".only is testing to either _ or undefined",
-    () => expect(
-      _(false).only(b => !b)._
-    ).toBe(
-      false
-    )
-  );
-
-  it(
-    ".only is testing to either _ or undefined",
-    () => expect(
-      _(false).only(b => b)._
-    ).toBe(
-      undefined
-    )
-  );
-
-  it(
     ".keys get wrapped Object's keys Array",
     () => expect(
       _(a).keys._[0]

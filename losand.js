@@ -23,7 +23,7 @@
     });
   };
 
-  _.version = "losand@0.2.3";
+  _.version = "losand@0.2.4";
 
   Object.defineProperties(_.prototype, {
     is: {
@@ -36,12 +36,6 @@
       configurable: true,
       value (c) {
         return this.map(w => w.constructor.name !== c ? w : undefined);
-      }
-    },
-    only: {
-      configurable: true,
-      value (f, ...v) {
-        return this.map(o => f(o, ...v) ? o : undefined);
       }
     },
     valid: {
