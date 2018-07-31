@@ -325,9 +325,9 @@ describe("test of losand", function () {
   it(
     ".omit out arguments keys return copied new one",
     () => expect(
-      _({a: 13, b: 24, c: 51, d: 40}).omit("a", "c").vals._.reduce((p, c) => p + c, 0)
+      _({a: 13, b: 24, c: 51, d: 39}).omit("a", "c").vals._.reduce((p, c) => p + c, 0)
     ).toBe(
-      24 + 40
+      24 + 39
     )
   );
 

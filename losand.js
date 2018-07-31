@@ -283,7 +283,11 @@
     json: {
       configurable:true,
       get () {
-        return _(JSON.parse(this));
+        try {
+          return _(JSON.parse(this));
+        } catch (e) {
+          return this;
+        }
       }
     }
   });
