@@ -286,7 +286,7 @@
         try {
           return _(JSON.parse(this));
         } catch (e) {
-          return this;
+          return this.valueOf();
         }
       }
     }

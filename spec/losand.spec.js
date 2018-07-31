@@ -502,4 +502,12 @@ describe("test of losand", function () {
       1
     )
   );
+  it(
+    "String.prototype.json get parsed after this value",
+    () => expect(
+      "test".json
+    ).toBe(
+      "test"
+    )
+  );
 });
