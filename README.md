@@ -127,14 +127,17 @@ _(
 //is check type and after return it
 _({a: 1}).is("Object")._ // {a: 1}
 _({a: 1}).is("Array")._ // undefined
+_({a: 1}).is("Array").re._ // {a: 1}
 
 //isnt mismatch type and after return it
 _({a: 1}).isnt("Array")._ // {a: 1}
 _({a: 1}).isnt("Object")._ // undefined
+_({a: 1}).isnt("Object").re._ // {a: 1}
 
 //only get functions result if true return it
 _({a: 1}).only(o => o.a === 1)._ // {a: 1}
 _({a: 1}).only(o => o.a === 2)._ // undefined
+_({a: 1}).only(o => o.a === 2).re._ // {a: 1}
 
 //keys
 _({r: 128}).keys._[0] === "r"
