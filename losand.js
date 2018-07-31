@@ -23,13 +23,19 @@
     });
   };
 
-  _.version = "losand@0.2.2";
+  _.version = "losand@0.2.3";
 
   Object.defineProperties(_.prototype, {
     is: {
       configurable: true,
       value (c) {
-        return this.map(w => w.constructor === c ? w : undefined);
+        return this.map(w => w.constructor.name === c ? w : undefined);
+      }
+    },
+    isnt: {
+      configurable: true,
+      value (c) {
+        return this.map(w => w.constructor.name !== c ? w : undefined);
       }
     },
     only: {
@@ -59,13 +65,13 @@
     $: {
       configurable: true,
       value (f, ...v) {
-        return this.map(f, ...v).re;
+        return this.valid ? this.map(f, ...v).re : this;
       }
     },
     $$: {
       configurable: true,
       value (f, ...v) {
-        return this.fit(f, ...v).re;
+        return this.valid ? this.fit(f, ...v).re : this;
       }
     },
     map: {
@@ -208,7 +214,52 @@
     }
   });
 
-  this.constructor === Object && _(_).descript({
+  _(this)
+  .isnt("Object")
+  .$(t => {
+    _(_).descript({
+      on: {
+        configurable: true,
+        value (d, ...a) {
+          a.length !== 0
+          ? a.forEach(v => d.addEventListener(v, this.v))
+          : this.keys.v.forEach(k => d.addEventListener(k, this.v));
+          return this;
+        }
+      },
+      off: {
+        configurable: true,
+        value (d, ...a) {
+          a.length !== 0
+          ? a.forEach(v => d.removeEventListener(v, this.v))
+          : this.keys.v.forEach(k => d.removeEventListener(k, this.v));
+          return this;
+        }
+      }
+    });
+
+    _(Object).descript({
+      handleEvent: {
+        configurable: true,
+        writable: true,
+        value(e) {
+          e.$ = e.target instanceof Node && $(e.target);
+          e._ = e.data && e.data.json;
+          this[e.type].constructor === Object
+          ? this[e.type][
+            JSON.parse(e.data).type
+            ? JSON.parse(e.data).type
+            : this[e.type].type
+          ].call(this, e)
+          : this[e.type](e);
+          e = null;
+        }
+      }
+    });
+  })
+  .re
+  .is("Object")
+  .$(t => _(_).descript({
     on: {
       configurable: true,
       value (d) {
@@ -223,47 +274,7 @@
         return this;
       }
     }
-  });
-  
-  this.constructor !== Object && _(_).descript({
-    on: {
-      configurable: true,
-      value (d, ...a) {
-        a.length !== 0
-        ? a.forEach(v => d.addEventListener(v, this.v))
-        : this.keys.v.forEach(k => d.addEventListener(k, this.v));
-        return this;
-      }
-    },
-    off: {
-      configurable: true,
-      value (d, ...a) {
-        a.length !== 0
-        ? a.forEach(v => d.removeEventListener(v, this.v))
-        : this.keys.v.forEach(k => d.removeEventListener(k, this.v));
-        return this;
-      }
-    },
-  });
-  
-  this.constructor !== Object && _(Object).descript({
-    handleEvent: {
-      configurable: true,
-      writable: true,
-      value(e) {
-        e.$ = e.target instanceof Node && $(e.target);
-        e._ = e.data && e.data.json;
-        this[e.type].constructor === Object
-        ? this[e.type][
-          JSON.parse(e.data).type
-          ? JSON.parse(e.data).type
-          : this[e.type].type
-        ].call(this, e)
-        : this[e.type](e);
-        e = null;
-      }
-    }
-  });
+  }));
 
   _(Array).descript({
     each: {

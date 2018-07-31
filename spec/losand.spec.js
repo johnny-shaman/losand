@@ -197,6 +197,18 @@ describe("test of losand", function () {
   );
 
   it(
+    "$ is chainable method on undefined",
+    () => expect(
+      _(undefined)
+      .$($ => $.add(5))
+      .$($ => $.add(5))
+      ._
+    ).toBe(
+      undefined
+    )
+  );
+
+  it(
     "$$ have been chainable IO",
     () => expect(
       _(
@@ -218,9 +230,21 @@ describe("test of losand", function () {
   );
 
   it(
+    "$$ have been chainable IO on undefined",
+    () => expect(
+      _(undefined)
+      .$$($ => $.add(5))
+      .$$($ => $.add(5))
+      ._
+    ).toBe(
+      undefined
+    )
+  );
+
+  it(
     ".is is type matching of value's constructor return either _ or undefined",
     () => expect(
-      _(a).is(Object)._
+      _(a).is("Object")._
     ).toBe(
       a
     )
@@ -229,9 +253,27 @@ describe("test of losand", function () {
   it(
     ".is is type matching of value's constructor return either _ or undefined",
     () => expect(
-      _(a).is(Array)._
+      _(a).is("Array")._
     ).toBe(
       undefined
+    )
+  );
+
+  it(
+    ".isnt is type dismatching of value's constructor return either _ or undefined",
+    () => expect(
+      _(a).isnt("Object")._
+    ).toBe(
+      undefined
+    )
+  );
+
+  it(
+    ".is is type dismatching of value's constructor return either _ or undefined",
+    () => expect(
+      _(a).isnt("Array")._
+    ).toBe(
+      a
     )
   );
 

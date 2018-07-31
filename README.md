@@ -77,6 +77,12 @@ m(a).bind(x => k(x).bind(h))._.a === m(a).bind(k).bind(h)._.a
 //  fit <- link
 m(a).link(x => k(x).link(h))._.a === m(a).link(k).link(h)._.a
 
+// cash
+_(3).map(n => n += 5)._    // 8
+_(3).map(n => n += 5).re._ // 3
+
+_({b: 1}).map(o => o.b += 1)._    // 2
+_({b: 1}).map(o => o.b += 1).re._ // {b: 2}
 
 // $ methods Chainable method
 // ex1.
@@ -118,7 +124,19 @@ _(
 .$$((v, $) => $.add(v), 5)
 ._.b === 10
 
-// keys
+//is check type and after return it
+_({a: 1}).is("Object")._ // {a: 1}
+_({a: 1}).is("Array")._ // undefined
+
+//isnt mismatch type and after return it
+_({a: 1}).isnt("Array")._ // {a: 1}
+_({a: 1}).isnt("Object")._ // undefined
+
+//only get functions result if true return it
+_({a: 1}).only(o => o.a === 1)._ // {a: 1}
+_({a: 1}).only(o => o.a === 2)._ // undefined
+
+//keys
 _({r: 128}).keys._[0] === "r"
 
 //vals

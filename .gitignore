@@ -60,8 +60,7 @@ typings/
 # next.js build output
 .next
 
-.c9/
-.git/
+.c9
+.git
 .npmignore
-README.mdd
-dsand.jsd
+coverage
