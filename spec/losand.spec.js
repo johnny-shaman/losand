@@ -200,8 +200,8 @@ describe("test of losand", function () {
     "$ is chainable method on undefined",
     () => expect(
       _(undefined)
-      .$($ => $.add(5))
-      .$($ => $.add(5))
+      .$(b)
+      .$(b)
       ._
     ).toBe(
       undefined
@@ -233,8 +233,8 @@ describe("test of losand", function () {
     "$$ have been chainable IO on undefined",
     () => expect(
       _(undefined)
-      .$$($ => $.add(5))
-      .$$($ => $.add(5))
+      .$$(b)
+      .$$(b)
       ._
     ).toBe(
       undefined
