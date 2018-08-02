@@ -20,7 +20,7 @@ importScripts("./lib/losand.js")
 ~~~
 ### browser
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@0.2.6/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.2.7/losand.js"></script>
 ~~~
 
 ~~~javascript
@@ -147,17 +147,23 @@ _({a: 3}).draw({b: 5}).$($ => {
     
 })
 
-//drop is wrapped Object assign to argumentate Object
-_({a: 3}).drop({b: 5}).$($ => {
+//cast is wrapped Object assign to argumentate Object
+_({a: 3}).cast({b: 5}).$($ => {
     $.a === 3 
     $.b === 5 // {b: 5} is wrapped on having
 })
 
-//pick up of wrapped Object from arguments and other object have same inheritance
+//hold on of wrapped Object from arguments and other object have same inheritance
 _({a: 13, b: 24, c: 51, d: 40}).pick("a", "c")._ // {a: 13, c: 51}
 
-//omit out of wrapped Object from arguments and other object have same inheritance
-_({a: 13, b: 24, c: 51, d: 40}).omit("a", "c")._ // {b: 24, d: 40}
+//crop out of wrapped Object from arguments and other object have same inheritance
+_({a: 13, b: 24, c: 51, d: 40}).crop("a", "c")._ // {b: 24, d: 40}
+
+//pick up from wrapped Array to argument Object and other object have same inheritance
+_(["a", "c"]).pick({a: 13, b: 24, c: 51, d: 40})._ // {a: 13, c: 51}
+
+//drop out from wrapped Array from argument Object and other object have same inheritance
+_(["a", "c"]).drop({a: 13, b: 24, c: 51, d: 40})._ // {b: 24, d: 40}
 
 //list 
 _({2: 24, 0: 1, 1: 35}).list._[1] === 35
@@ -252,19 +258,15 @@ _(eeTest).once({
 ~~~
 ### Worker
 ~~~javascript
-//addLitener
-_(EventTarget).on({
-    "click" () {},
-    "dragstart" () {},
-    "dragend" () {},
+const eo = {
     "message" () {},
-})
+    "fetch" () {}
+}
+//addLitener
+_(EventTarget).on(eo)
+_(EventTarget).on(eo, "fetch")
 
 //removeListener
-_(EventTarget).off({
-    "click" () {},
-    "dragstart" () {},
-    "dragend" () {},
-    "message" () {},
-})
+_(EventTarget).off(eo)
+_(EventTarget).off(eo, "fetch")
 ~~~

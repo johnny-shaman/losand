@@ -23,7 +23,7 @@
     });
   };
 
-  _.version = "losand@0.2.6";
+  _.version = "losand@0.2.7";
 
   Object.defineProperties(_.prototype, {
     is: {
@@ -110,13 +110,13 @@
         return this.map(Object.assign, ...o);
       }
     },
-    drop: {
+    cast: {
       configurable: true,
       value (...o) {
         return this.fit(Object.assign, ...o);
       }
     },
-    pick: {
+    hold: {
       configurable: true,
       value (...v) {
         return this.bind(
@@ -124,10 +124,22 @@
         );
       }
     },
-    omit: {
+    crop: {
       configurable: true,
       value (...v) {
-        return this.pick(...this.keys._.filter(k => !v.includes(k)));
+        return this.hold(...this.keys._.filter(k => !v.includes(k)));
+      }
+    },
+    pick: {
+      configurable: true,
+      value (o) {
+        return _(o).hold(...this.v);
+      }
+    },
+    drop: {
+      configurable: true,
+      value (o) {
+        return _(o).crop(...this.v);
       }
     },
     define: {
@@ -164,7 +176,7 @@
     list: {
       configurable: true,
       get () {
-        return this.bind(o => _(o).drop(this.keys.v.filter(
+        return this.bind(o => _(o).cast(this.keys.v.filter(
           (v, k) => !isNaN(Number(k))
         )));
       }

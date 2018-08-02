@@ -305,27 +305,45 @@ describe("test of losand", function () {
   );
 
   it(
-    ".drop is wrapped Object assign to argumentate Object",
+    ".cast is wrapped Object assign to argumentate Object",
     () => expect(
-      _({b: 2}).drop(a)._
+      _({b: 2}).cast(a)._
     ).toBe(
       a
     )
   );
 
   it(
-    ".pick up arguments keys return copied new one",
+    ".hold on arguments keys return copied new one",
     () => expect(
-      _({a: 13, b: 24, c: 51, d: 40}).pick("a", "c").vals._.reduce((p, c) => p + c, 0)
+      _({a: 13, b: 24, c: 51, d: 40}).hold("a", "c").vals._.reduce((p, c) => p + c, 0)
     ).toBe(
       13 + 51
     )
   );
 
   it(
-    ".omit out arguments keys return copied new one",
+    ".crop out arguments keys return copied new one",
     () => expect(
-      _({a: 13, b: 24, c: 51, d: 39}).omit("a", "c").vals._.reduce((p, c) => p + c, 0)
+      _({a: 13, b: 24, c: 51, d: 39}).crop("a", "c").vals._.reduce((p, c) => p + c, 0)
+    ).toBe(
+      24 + 39
+    )
+  );
+
+  it(
+    ".pick up keys return copied new one",
+    () => expect(
+      _(["a", "c"]).pick({a: 13, b: 24, c: 51, d: 40}).vals._.reduce((p, c) => p + c, 0)
+    ).toBe(
+      13 + 51
+    )
+  );
+
+  it(
+    ".drop out arguments keys return copied new one",
+    () => expect(
+      _(["a", "c"]).drop({a: 13, b: 24, c: 51, d: 39}).vals._.reduce((p, c) => p + c, 0)
     ).toBe(
       24 + 39
     )
