@@ -20,7 +20,7 @@ importScripts("./lib/losand.js")
 ~~~
 ### browser
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@0.2.7/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.2.8/losand.js"></script>
 ~~~
 
 ~~~javascript
@@ -153,17 +153,20 @@ _({a: 3}).cast({b: 5}).$($ => {
     $.b === 5 // {b: 5} is wrapped on having
 })
 
-//hold on of wrapped Object from arguments and other object have same inheritance
-_({a: 13, b: 24, c: 51, d: 40}).pick("a", "c")._ // {a: 13, c: 51}
+//hold on wrapped Object from arguments and other object have same inheritance
+_({a: 13, b: 24, c: 51, d: 40}).hold("a", "c")._ // {a: 13, c: 51}
 
 //crop out of wrapped Object from arguments and other object have same inheritance
 _({a: 13, b: 24, c: 51, d: 40}).crop("a", "c")._ // {b: 24, d: 40}
 
-//pick up from wrapped Array to argument Object and other object have same inheritance
+//pick up wrapped Array to argument Object and other object have same inheritance
 _(["a", "c"]).pick({a: 13, b: 24, c: 51, d: 40})._ // {a: 13, c: 51}
 
-//drop out from wrapped Array from argument Object and other object have same inheritance
+//drop out wrapped Array from argument Object and other object have same inheritance
 _(["a", "c"]).drop({a: 13, b: 24, c: 51, d: 40})._ // {b: 24, d: 40}
+
+//exist on wrapped Object's keys from arguments
+_({a: 13, b: 24, c: 51, d: 40}).crop("a", "c", "f")._ // ["a", "c"]
 
 //list 
 _({2: 24, 0: 1, 1: 35}).list._[1] === 35

@@ -350,6 +350,15 @@ describe("test of losand", function () {
   );
 
   it(
+    ".exist on arguments keys return copied new one",
+    () => expect(
+      _({a: 13, b: 24, c: 51, d: 39}).exist("a", "c", "f")._.join()
+    ).toBe(
+      "a,c"
+    )
+  );
+
+  it(
     ".define is wrapped Object doing defineProperties",
     () => expect(
       _({b: 5}).define({
