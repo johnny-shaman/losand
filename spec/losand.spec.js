@@ -532,7 +532,7 @@ describe("test of losand", function () {
   it(
     "String.prototype.json get parsed after this value",
     () => expect(
-      "test".json
+      "test".json._
     ).toBe(
       "test"
     )

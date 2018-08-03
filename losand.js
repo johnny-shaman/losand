@@ -23,7 +23,7 @@
     });
   };
 
-  _.version = "losand@0.2.8";
+  _.version = "losand@0.3.0";
 
   Object.defineProperties(_.prototype, {
     is: {
@@ -304,7 +304,7 @@
         try {
           return _(JSON.parse(this));
         } catch (e) {
-          return this.valueOf();
+          return _(this);
         }
       }
     }
