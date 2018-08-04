@@ -166,7 +166,7 @@ _(["a", "c"]).pick({a: 13, b: 24, c: 51, d: 40})._ // {a: 13, c: 51}
 _(["a", "c"]).drop({a: 13, b: 24, c: 51, d: 40})._ // {b: 24, d: 40}
 
 //exist on wrapped Object's keys from arguments
-_({a: 13, b: 24, c: 51, d: 40}).crop("a", "c", "f")._ // ["a", "c"]
+_({a: 13, b: 24, c: 51, d: 40}).exist("a", "c", "f")._ // ["a", "c"]
 
 //list 
 _({2: 24, 0: 1, 1: 35}).list._[1] === 35
