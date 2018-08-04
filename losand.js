@@ -23,7 +23,7 @@
     });
   };
 
-  _.version = "losand@0.3.0";
+  _.version = "losand@0.3.2";
 
   Object.defineProperties(_.prototype, {
     is: {
@@ -133,19 +133,25 @@
     pick: {
       configurable: true,
       value (o) {
-        return _(o).hold(...this.v);
+        return this.bind(a => _(o).hold(...a));
       }
     },
     drop: {
       configurable: true,
       value (o) {
-        return _(o).crop(...this.v);
+        return this.bind(a => _(o).crop(...a));
       }
     },
-    exist: {
+    exists: {
       configurable: true,
       value (...v) {
-        return _(v).map(a => a.filter(k => this.v[k] !== undefined));
+        return this.bind(o => _(v).map(a => a.filter(k => o[k] !== undefined)));
+      }
+    },
+    except: {
+      configurable: true,
+      value (...v) {
+        return this.bind(o => _(v).map(a => _(o).keys._.filter(k => !a.includes(k))));
       }
     },
     define: {

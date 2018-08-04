@@ -350,11 +350,20 @@ describe("test of losand", function () {
   );
 
   it(
-    ".exist on arguments keys return copied new one",
+    ".exists on arguments keys return copied new one",
     () => expect(
-      _({a: 13, b: 24, c: 51, d: 39}).exist("a", "c", "f")._.join()
+      _({a: 13, b: 24, c: 51, d: 39}).exists("a", "c", "f")._.join()
     ).toBe(
       "a,c"
+    )
+  );
+
+  it(
+    ".except on arguments keys return copied new one",
+    () => expect(
+      _({a: 13, b: 24, c: 51, d: 39}).except("a", "c", "f")._.join()
+    ).toBe(
+      "b,d"
     )
   );
 
