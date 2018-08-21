@@ -159,7 +159,6 @@ _({r: 128}).vals._[0] === 128
 _({a: 3}).draw({b: 5}).$($ => {
   $.a === 3 // {a: 3} is wrapped on having
   $.b === 5
-  
 })
 
 //cast is wrapped Object assign to argumentate Object
@@ -186,6 +185,21 @@ _({a: 13, b: 24, c: 51, d: 40}).exists("a", "c", "f")._ // ["a", "c"]
 //except on wrapped Object's keys from arguments
 _({a: 13, b: 24, c: 51, d: 40}).except("a", "c", "f")._ // ["b", "d"]
 
+//turn is turn to key value pairing
+_(["a", "b", "c"]).turn._ // {a: 0, b: 1, c: 2}
+
+/*
+relate is pairing two Objects but each Objects have no property and no inheritance and
+swap is call _().relate paired Object another one
+*/
+_({c: 14}).relate({d: 23}).swap._.c === 14;
+_({c: 14}).relate({d: 23}).swap._.d === undefined;
+_({c: 14}).relate({d: 23}).swap.swap_.c === undefined;
+_({c: 14}).relate({d: 23}).swap.swap_.d === 23;
+
+_({c: 14}).relate(t1);
+_(t1).swap._.c === 14
+
 //list 
 _({2: 24, 0: 1, 1: 35}).list // [1, 35, 24]
 
@@ -196,6 +210,8 @@ _({a: 68}).define({
     value: 123
   }
 })._.defined === 123
+
+
 
 //create is create a new Object inherit on wrapped Object
 Object.getPrototypeOf(
@@ -237,12 +253,12 @@ _({a: 3}).json.json._.a === 3
 //.from map in prototype
 _(Object).from._ === Object.prototype
 
-//.relate write up prototype object on constructor
+//.affix write up prototype object on constructor
 _(function () {}).affix({
   a : 3
 }).from._.a === 3
 
-//.relate define properties mapping prototype object on constructor
+//.annex define properties mapping prototype object on constructor
 _(function () {}).annex({
   b : {
     configurable: true,
