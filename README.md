@@ -313,17 +313,3 @@ _(eeTest).once({
   "delete": () => {}
 })
 ~~~
-### Worker
-~~~javascript
-const eo = {
-  "message" () {},
-  "fetch" () {}
-}
-//addLitener
-_(EventTarget).on(eo)
-_(EventTarget).on(eo, "fetch")
-
-//removeListener
-_(EventTarget).off(eo)
-_(EventTarget).off(eo, "fetch")
-~~~
