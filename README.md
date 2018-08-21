@@ -281,7 +281,7 @@ _((x, y, z) => (x + y) * z).cache(3, 2, 4).re.recache(5, 3, 7)._ === 56
 
 ~~~
 ## Event driven development
-### Only node.js...
+
 ~~~javascript
 const EETest = _(EventEmitter).fork(function () {
   EventEmitter.call(this)
