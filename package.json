@@ -1,6 +1,6 @@
 {
   "name": "losand",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "losand is a monad on Javascript",
   "main": "losand.js",
   "scripts": {
@@ -12,7 +12,10 @@
   },
   "keywords": [
     "functional",
+    "functor",
     "monad",
+    "algebra",
+    "algebraic",
     "server",
     "worker",
     "browser"

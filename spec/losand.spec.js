@@ -1,7 +1,7 @@
 describe("test of losand", function () {
   const _ = require("../losand.js");
   const EventEmitter = require("events").EventEmitter;
-  
+
   const a = {a: 1};
 
   const b = (v) => ({b: v});
@@ -10,26 +10,47 @@ describe("test of losand", function () {
   const k = x => _({a: x.a + 5});
   const h = x => _({a: x.a * x.a});
   const m = x => _(x);
-  
-  const ary = [];
+
+  const ary = [1, 3, 2];
+  const aryf = [v => v += 2, v => v *= 2, v => v -= 2];
   const rs = {a : 0};
   const qr = (k, v) => rs.a = v;
+
+  const nulledAry0 = [null,2,3];
+  const nulledAry1 = [1,null,3];
+  const nulledAry2 = [1,2,null];
+  const voidAry0 = [_._,2,3];
+  const voidAry1 = [1,_._,3];
+  const voidAry2 = [1,2,_._];
+
+  const nulledObj0 = {a: null, b: 2, c: 3};
+  const nulledObj1 = {a: 1, b: null, c: 3};
+  const nulledObj2 = {a: 1, b: 2, c: null};
+  const voidObj0 = {a: null, b: 2, c: 3};
+  const voidObj1 = {a: 1, b: null, c: 3};
+  const voidObj2 = {a: 1, b: 2, c: null};
+
+  const fulfillObj = {a: 0, b: true, c: false};
+  const fulfillAry = [0, true, false];
+
+  const triargF = (x, y, z) => (x + y) * z;
 
   const EETest = function () {
     EventEmitter.call(this);
   };
 
-  EETest.prototype = _(EventEmitter.prototype).create({
+  EETest.prototype = Object.create(EventEmitter.prototype, {
     constructor: {
       configurable: true,
       writable: true,
       value: EETest
     }
-  })._;
+  });
 
   const eeTest = _(new EETest());
 
   it("testing b", () => expect(b(10).b).toBe(10));
+  it("_._", () => expect(_._).toBe(undefined));
 
   it(
     "join",
@@ -52,9 +73,9 @@ describe("test of losand", function () {
   it(
     "join on undefined",
     () => expect(
-      _(undefined).join
+      _(_._).join
     ).toBe(
-      undefined
+      _._
     )
   );
 
@@ -79,9 +100,9 @@ describe("test of losand", function () {
   it(
     "map is fmap (liftM) on undefined",
     () => expect(
-      _(undefined).map(Object.assign, a)._
+      _(_._).map(Object.assign, a)._
     ).toBe(
-      undefined
+      _._
     )
   );
 
@@ -106,9 +127,9 @@ describe("test of losand", function () {
   it(
     "fit is Hold IO just function's on undefined",
     () => expect(
-      _(undefined).fit(Object.assign, c)._
+      _(_._).fit(Object.assign, c)._
     ).toBe(
-      undefined
+      _._
     )
   );
 
@@ -199,12 +220,12 @@ describe("test of losand", function () {
   it(
     "$ is chainable method on undefined",
     () => expect(
-      _(undefined)
+      _(_._)
       .$(b)
       .$(b)
       ._
     ).toBe(
-      undefined
+      _._
     )
   );
 
@@ -232,48 +253,183 @@ describe("test of losand", function () {
   it(
     "$$ have been chainable IO on undefined",
     () => expect(
-      _(undefined)
+      _(_._)
       .$$(b)
       .$$(b)
       ._
     ).toBe(
-      undefined
+      _._
     )
   );
 
   it(
-    ".is is type matching of value's constructor return either _ or undefined",
+    ".by return wrapped Object's constructor",
     () => expect(
-      _(a).is("Object")._
+      _(a).by._
+    ).toBe(
+      Object
+    )
+  );
+
+  it(
+    ".is test case and truely return just",
+    () => expect(
+      _(a).is(Object)._
     ).toBe(
       a
     )
   );
 
   it(
-    ".is is type matching of value's constructor return either _ or undefined",
+    ".is test case and truely return just",
     () => expect(
-      _(a).is("Array")._
+      _(a).is(Array)._
     ).toBe(
-      undefined
+      _._
     )
   );
 
   it(
-    ".isnt is type dismatching of value's constructor return either _ or undefined",
+    ".isnt test case and falsy return just",
     () => expect(
-      _(a).isnt("Object")._
+      _(a).isnt(Object)._
     ).toBe(
-      undefined
+      _._
     )
   );
 
   it(
-    ".is is type dismatching of value's constructor return either _ or undefined",
+    ".isnt test case and falsy return just",
     () => expect(
-      _(a).isnt("Array")._
+      _(a).isnt(Array)._
     ).toBe(
       a
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(nulledAry0).fulfill
+    ).toBe(
+      false
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(nulledAry1).fulfill
+    ).toBe(
+      false
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(nulledAry2).fulfill
+    ).toBe(
+      false
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(voidAry0).fulfill
+    ).toBe(
+      false
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(voidAry1).fulfill
+    ).toBe(
+      false
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(voidAry2).fulfill
+    ).toBe(
+      false
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(nulledObj0).fulfill
+    ).toBe(
+      false
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(nulledObj1).fulfill
+    ).toBe(
+      false
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(nulledObj2).fulfill
+    ).toBe(
+      false
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(voidObj0).fulfill
+    ).toBe(
+      false
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(voidObj1).fulfill
+    ).toBe(
+      false
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(voidObj2).fulfill
+    ).toBe(
+      false
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(fulfillAry).fulfill
+    ).toBe(
+      true
+    )
+  );
+
+  it(
+    ".fulfill test all and truely return just",
+    () => expect(
+      _(fulfillObj).fulfill
+    ).toBe(
+      true
     )
   );
 
@@ -368,6 +524,15 @@ describe("test of losand", function () {
   );
 
   it(
+    ".turn get turn overed wraped Object's key <-> value",
+    () => expect(
+      _({a: 13, b: 24, c: 51, d: 39}).turn._[24]
+    ).toBe(
+      "b"
+    )
+  );
+
+  it(
     ".define is wrapped Object doing defineProperties",
     () => expect(
       _({b: 5}).define({
@@ -378,6 +543,24 @@ describe("test of losand", function () {
       })._.defined
     ).toBe(
       123
+    )
+  );
+
+  it(
+    ".relatea and swap is wrapped Object pairing argumentate Object #1",
+    () => expect(
+      _(b).relate(a).swap._
+    ).toBe(
+      a
+    )
+  );
+
+  it(
+    ".relatea and swap is wrapped Object pairing argumentate Object #2",
+    () => expect(
+      _(b).relate(a).swap.swap._
+    ).toBe(
+      b
     )
   );
 
@@ -402,9 +585,18 @@ describe("test of losand", function () {
   it(
     ".depend is create a new Object inherit on argumentate Object ",
     () => expect(
-      Object.getPrototypeOf(_({}).depend(a)._)
+      Object.getPrototypeOf(_({b: 5}).depend(a)._)
     ).toBe(
       a
+    )
+  );
+
+  it(
+    ".depend is create a new Object inherit on argumentate Object ",
+    () => expect(
+      _({b: 5}).depend(a)._.b
+    ).toBe(
+      5
     )
   );
 
@@ -439,7 +631,7 @@ describe("test of losand", function () {
   );
 
   it(
-    ".from is returning wrapped constructor's prototype",
+    ".from is returning wrapped constructor's prototype or  wrapped Object's prototype",
     () => expect(
       _(EETest).from._
     ).toBe(
@@ -448,34 +640,34 @@ describe("test of losand", function () {
   );
 
   it(
-    ".from is returning wrapped constructor's prototype",
+    ".from is returning wrapped constructor's prototype or  wrapped Object's prototype",
     () => expect(
-      _(EETest).from._
+      _([]).from._
     ).toBe(
-      EETest.prototype
+      Array.prototype
     )
   );
 
   it(
-    ".relate is wrapped constructor's prototype's assigning argumentate object",
+    ".affix is wrapped constructor's prototype's assigning argumentate object",
     () => expect(
-      _(EETest).relate({
-        related : 0
-      }).from._.related
+      _(new Function).affix({
+        c : 328
+      }).from._.c
     ).toBe(
-      0
+      328
     )
   );
 
   it(
-    ".descript is wrapped constructor's prototype's defining argumentate description",
+    ".annex is wrapped constructor's prototype's defining argumentate description",
     () => expect(
-      _(EETest).descript({
-        descripted : {
+      _(new Function).annex({
+        d : {
           configurable: true,
           value: 564
         }
-      }).from._.descripted
+      }).from._.d
     ).toBe(
       564
     )
@@ -493,14 +685,82 @@ describe("test of losand", function () {
   it(
     ".fork test #2",
     () => expect(
-      _(EETest).fork(
-        _(new Function()).relate({
+      _(new Function()).fork(
+        _(new Function()).affix({
           childStaticValue: 283
         })._
       ).from._.childStaticValue
     ).toBe(
       283
     )
+  );
+
+  it(
+    ".hybrid is inserting to Wrapped Object's Prototype chain",
+    () => expect(
+      _(EETest).fork(
+        _(new Function()).hybrid({
+          childStaticValue: 283
+        })._
+      ).from._.childStaticValue
+    ).toBe(
+      283
+    )
+  );
+
+  it(
+    ".hybrid is inserting to Wrapped Object's Prototype chain",
+    () => expect(
+      _(EETest).fork(
+        _(new Function()).hybrid({
+          childStaticValue: 283
+        })._
+      ).from.from._
+    ).toBe(
+      EETest.prototype
+    )
+  );
+
+  it(
+    ".part is carrying function",
+    () => expect(
+      _(triargF).part(_._, 4, 2)(1)._
+    ).toBe(
+      10
+    )
+  );
+
+  it(
+    ".part is carrying function",
+    () => expect(
+      _(triargF).part(_._, null, 2)(1)(4)._
+    ).toBe(
+      10
+    )
+  );
+
+  it(
+    ".part is carrying function",
+    () => expect(
+      _(triargF).part(null, 4, _._)(1)(2)._
+    ).toBe(
+      10
+    )
+  );
+
+  it(
+    ".cache & .recache presence delay evaluation",
+    () => {
+      const _triargF = _(triargF);
+      _triargF.cache(1, 4, 2);
+      _triargF.cache(3, 5, 7);
+      _triargF.cache(9, 11, 13);
+      expect(_triargF.cache()._).toBe(10);
+      _triargF.recache(4, 6, 2);
+      _triargF.cache(3, 5, 7);
+      _triargF.cache(9, 11, 13);
+      expect(_triargF.cache()._).toBe(20);
+    }
   );
 
   it(
@@ -527,6 +787,60 @@ describe("test of losand", function () {
       ary.each
     ).toBe(
       ary.forEach
+    )
+  );
+
+  it(
+    "Array.prototype.aMap is ApplicativeMap method on Array #1",
+    () => expect(
+      ary.aMap(aryf)
+    ).toEqual(
+      [3, 5, 4, 2, 6, 4, -1, 1, 0]
+    )
+  );
+
+  it(
+    "Array.prototype.aMap is ApplicativeMap method on Array #2",
+    () => expect(
+      aryf.aMap(ary)
+    ).toEqual(
+      [3, 5, 4, 2, 6, 4, -1, 1, 0]
+    )
+  );
+
+  it(
+    "Array.prototype.adapt is ApplicativeMap method on Array #1",
+    () => expect(
+      [0,1, _._,3, _._].adapt(2, 5)
+    ).toEqual(
+      [0, 1, 2, 3, 5]
+    )
+  );
+
+  it(
+    "Array.prototype.adapt is ApplicativeMap method on Array #1",
+    () => expect(
+      [0,1, null,3, null].adapt(2, 5)
+    ).toEqual(
+      [0, 1, 2, 3, 5]
+    )
+  );
+
+  it(
+    "Array.prototype.adaptRight is ApplicativeMap method on Array #1",
+    () => expect(
+      [0,1, _._,3, _._].adaptRight(2, 5)
+    ).toEqual(
+      [0, 1, 5, 3, 2]
+    )
+  );
+
+  it(
+    "Array.prototype.adaptRight is ApplicativeMap method on Array #1",
+    () => expect(
+      [0,1, null,3, null].adaptRight(2, 5)
+    ).toEqual(
+      [0, 1, 5, 3, 2]
     )
   );
 

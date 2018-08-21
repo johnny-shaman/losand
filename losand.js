@@ -1,16 +1,14 @@
-/*
-  global
-    Node,
-    $
-*/
 (() => {
+  "use strict";
+
+
   Object.values = Object.values || function (o) {
     return Object.keys(o).map(k => o[k]);
   };
 
   let _ = function (v, re) {
     return Object.create(_.prototype, {
-      v: {
+      "@": {
         configurable: true,
         writable: true,
         value: v
@@ -19,35 +17,56 @@
         configurable: true,
         writable: true,
         value: re
+      },
+      cached: {
+        configurable: true,
+        writable: true,
+        value: undefined
       }
     });
   };
 
-  _.version = "losand@0.3.2";
-
   Object.defineProperties(_.prototype, {
+    by: {
+      configurable: true,
+      get () {
+        return this.map(w => w.constructor);
+      }
+    },
+    be: {
+      configurable: true,
+      value (f, ...v) {
+        return this.map(t => f(t, ...v) ? t : _._);
+      }
+    },
     is: {
       configurable: true,
-      value (c) {
-        return this.map(w => w.constructor.name === c ? w : undefined);
+      value (t) {
+        return this.be(v => _(v).by._ === t);
       }
     },
     isnt: {
       configurable: true,
-      value (c) {
-        return this.map(w => w.constructor.name !== c ? w : undefined);
+      value (t) {
+        return this.be(v => _(v).by._ !== t);
       }
     },
-    valid: {
+    "": {
       configurable: true,
       get () {
-        return !(this.v === undefined || this.v === null);
+        return this["@"] === undefined || this["@"] === null;
+      }
+    },
+    fulfill: {
+      configurable: true,
+      get () {
+        return !(this.vals._.includes(_._) || this.vals._.includes(null));
       }
     },
     join: {
       configurable: true,
       get () {
-        return this.valid ? this.v.valueOf() : this.v;
+        return this[""] ? this["@"] : this["@"].valueOf();
       }
     },
     _: {
@@ -59,37 +78,37 @@
     $: {
       configurable: true,
       value (f, ...v) {
-        return this.valid ? this.map(f, ...v).re : this;
+        return this[""] ? this : this.map(f, ...v).re;
       }
     },
     $$: {
       configurable: true,
       value (f, ...v) {
-        return this.valid ? this.fit(f, ...v).re : this;
+        return this[""] ? this : this.fit(f, ...v).re;
       }
     },
     map: {
       configurable: true,
       value (f, ...v) {
-        return this.valid ? _(f(this.v, ...v), this): this;
+        return this[""] ? this : _(f(this["@"], ...v), this);
       }
     },
     fit: {
       configurable: true,
       value (f, ...v) {
-        return this.valid ? _(f(...v, this.v), this): this;
+        return this[""] ? this : _(f(...v, this["@"]), this);
       }
     },
     bind: {
       configurable: true,
       value (f, ...v) {
-        return Object.assign(this.map(f, ...v)._, {re: this});
+        return this.map(f, ...v)._;
       }
     },
     link: {
       configurable: true,
       value (f, ...v) {
-        return Object.assign(this.fit(f, ...v)._, {re: this});
+        return this.fit(f, ...v)._;
       }
     },
     keys: {
@@ -151,7 +170,30 @@
     except: {
       configurable: true,
       value (...v) {
-        return this.bind(o => _(v).map(a => _(o).keys._.filter(k => !a.includes(k))));
+        return this.bind(
+          o => _(v).map(a => _(o).keys._.filter(k => !a.includes(k)))
+        );
+      }
+    },
+    turn: {
+      configurable: true,
+      get () {
+        return this.keys.bind(
+          a => a.reduce((p, c) => p.draw({[this["@"][c]]: c}), _({}))
+        );
+      }
+    },
+    relate: {
+      configurable: true,
+      value (o) {
+        _.pair.set(this["@"], o).set(o, this["@"]);
+        return this;
+      }
+    },
+    swap: {
+      configurable: true,
+      get () {
+        return this.map(m => _.pair.get(m));
       }
     },
     define: {
@@ -169,7 +211,7 @@
     other: {
       configurable: true,
       value (o = {}) {
-        return this.map($ => Object.create($.constructor.prototype, o));
+        return this.map(m => Object.create(_(m).by.from._, o));
       }
     },
     depend: {
@@ -181,14 +223,14 @@
     give: {
       configurable: true,
       value (f, ...v) {
-        this.keys._.forEach(k => f(k, this.v[k], ...v));
+        this.keys._.forEach(k => f(k, this["@"][k], ...v));
         return this;
       }
     },
     list: {
       configurable: true,
       get () {
-        return this.bind(o => _(o).cast(this.keys.v.filter(
+        return this.bind(o => _(o).cast(this.keys["@"].filter(
           (v, k) => !isNaN(Number(k))
         )));
       }
@@ -202,110 +244,128 @@
     from: {
       configurable: true,
       get () {
-        return _(this.v.prototype);
+        return this.bind(m => _(m.prototype || Object.getPrototypeOf(m)));
       }
     },
-    relate: {
+    affix: {
       configurable: true,
       value (...o) {
-        return this.$($ => _($).from.draw(...o));
+        return this.$(m => _(m).from.draw(...o));
       }
     },
-    descript: {
+    annex: {
       configurable: true,
       value (o) {
-        return this.$($ => _($).from.define(o));
+        return this.$(m => _(m).from.define(o));
       }
     },
     fork: {
       configurable: true,
       value (f) {
-        return this.bind($ => _(f).draw({prototype: this.from.create({
-          constructor: {
-            configurable: true,
-            writable: true,
-            enumerable: false,
-            value: f
-          }
-        }).draw(f.prototype)._}));
+        return this.bind(
+          m => _(f)
+          .draw({prototype: _(m).from.create({
+            constructor: {
+              configurable: true,
+              writable: true,
+              enumerable: false,
+              value: f
+            }
+          }).draw(f.prototype)._})
+        );
+      }
+    },
+    hybrid: {
+      configurable: true,
+      value (o) {
+        return this.bind(
+          m => _(m).draw({prototype: _(m).from.from.create({
+            constructor: {
+              configurable: true,
+              writable: true,
+              enumerable: false,
+              value: _(m).from.by._
+            }
+          }).draw(o, _(m).from._)._})
+        );
+      }
+    },
+    part: {
+      configurable: true,
+      value (...v) {
+        return _(v).fulfill
+        ? this.map(f => f(...v))
+        : (...vv) => this.part(...v.adapt(...vv));
+      }
+    },
+    cache: {
+      configurable: true,
+      value (...v) {
+        return this.cached === undefined
+        ? _(this).draw({cached: this.map(f => f(...v))})._.cached
+        : this.cached;
+      }
+    },
+    recache: {
+      configurable: true,
+      value (...v) {
+        return _(this).draw({cached: undefined})._.cache(...v);
       }
     }
   });
 
-  _(this)
-  .isnt("Object")
-  .$(t => {
-    _(_).descript({
-      on: {
-        configurable: true,
-        value (d, ...a) {
-          a.length !== 0
-          ? a.forEach(v => d.addEventListener(v, this.v))
-          : this.keys.v.forEach(k => d.addEventListener(k, this.v));
-          return this;
-        }
-      },
-      off: {
-        configurable: true,
-        value (d, ...a) {
-          a.length !== 0
-          ? a.forEach(v => d.removeEventListener(v, this.v))
-          : this.keys.v.forEach(k => d.removeEventListener(k, this.v));
-          return this;
-        }
-      }
-    });
-
-    _(Object).descript({
-      handleEvent: {
-        configurable: true,
-        writable: true,
-        value(e) {
-          e.$ = e.target instanceof Node && $(e.target);
-          e._ = e.data && e.data.json;
-          this[e.type].constructor === Object
-          ? this[e.type][
-            JSON.parse(e.data).type
-            ? JSON.parse(e.data).type
-            : this[e.type].type
-          ].call(this, e)
-          : this[e.type](e);
-          e = null;
-        }
-      }
-    });
-  })
-  .re
-  .is("Object")
-  .$(t => _(_).descript({
-    on: {
-      configurable: true,
-      value (d) {
-        _(d).give(this.v.on.bind(this.v));
-        return this;
-      }
-    },
-    once: {
-      configurable: true,
-      value (d) {
-        _(d).give(this.v.once.bind(this.v));
-        return this;
-      }
+  _(_).draw({
+    pair: new Map(),
+    version: "losand@0.3.3",
+    lib: "losand",
+    get _ () {
+      return void 0;
     }
-  }));
+  });
 
-  _(Array).descript({
+  _(Array).annex({
     each: {
       configurable: true,
       get () {
         return this.forEach;
       }
+    },
+    aMap: {
+      configurable: true,
+      value (a) {
+        return Array.prototype.concat.call(
+          [],
+          ...(
+            this.reduce((p, c) => c.constructor === Function || p, false)
+            ? this
+            : a
+          )
+        .map(
+          f => (
+            this.reduce((p, c) => c.constructor === Function || p, false)
+            ? a.map(f)
+            : this.map(f)
+          )
+        ));
+      }
+    },
+    adapt: {
+      configurable: true,
+      value (...a) {
+        return this.map(v => !(v === undefined || v === null) ? v : a.shift());
+      }
+    },
+    adaptRight: {
+      configurable: true,
+      value (...a) {
+        return this.adapt(...a.reverse());
+      }
     }
   });
 
-  _(String).descript({
+  _(String).annex({
     json: {
-      configurable:true,
+      configurable: true,
       get () {
         try {
           return _(JSON.parse(this));
@@ -316,5 +376,22 @@
     }
   });
 
-  this.constructor === Object ? module.exports = _ : this._ = _;
+  _(this).is(Object).$(t => _(_).annex({
+    on: {
+      configurable: true,
+      value (d) {
+        _(d).give(this["@"].on.bind(this["@"]));
+        return this;
+      }
+    },
+    once: {
+      configurable: true,
+      value (d) {
+        _(d).give(this["@"].once.bind(this["@"]));
+        return this;
+      }
+    }
+  }));
+
+  _(this).by._ === Object ? module.exports = _ : this._ = _;
 })();
