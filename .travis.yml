@@ -3,7 +3,12 @@ env:
     - "CC_TEST_REPORTER_ID=9cfed95f4fb4a47ec85b6a9bad402920b47c30cbbf265669257cf4ad900df090"
     
 language: node_js
-  - "8"
+  - "stable"
+
+addons:
+  apt:
+    packages:
+      - lynx
 
 before_script:
   - "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter"
@@ -17,3 +22,6 @@ script:
 
 after_script:
   - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+  - "cat /home/travis/build/johnny-shaman/losand/coverage/coverage.json"
+  - "cat /home/travis/build/johnny-shaman/losand/coverage/lcov-report/workspace/losand.js.html"
+  - "cat /home/travis/build/johnny-shaman/losand/coverage/lcov-report/workspace/spec/losand.spec.js.html"
