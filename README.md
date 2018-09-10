@@ -2,7 +2,7 @@
 ## \_(losand).\_ is a monad imprementation on any Javascript
 [![Maintainability](https://api.codeclimate.com/v1/badges/bb24ccbb4103dec4837f/maintainability)](https://codeclimate.com/github/johnny-shaman/losand/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/bb24ccbb4103dec4837f/test_coverage)](https://codeclimate.com/github/johnny-shaman/losand/test_coverage)
-[![Build Status](https://travis-ci.org/johnny-shaman/losand.svg?branch=master)](https://travis-ci.org/johnny-shaman/losand)
+[![Build Status](https://travis-ci.org/johnny-shaman/losand.old.svg?branch=master)](https://travis-ci.org/johnny-shaman/losand.old)
 ## Usage
 
 ### node
