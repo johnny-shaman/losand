@@ -192,12 +192,12 @@ _(["a", "b", "c"]).turn._ // {a: 0, b: 1, c: 2}
 relate is pairing two Objects but each Objects have no property and no inheritance and
 swap is call _().relate paired Object another one
 */
-_({c: 14}).relate({d: 23}).swap._.c === 14;
-_({c: 14}).relate({d: 23}).swap._.d === undefined;
-_({c: 14}).relate({d: 23}).swap.swap_.c === undefined;
-_({c: 14}).relate({d: 23}).swap.swap_.d === 23;
+_({c: 14}).relate({d: 23}).swap._.c === undefined
+_({c: 14}).relate({d: 23}).swap._.d === 23
+_({c: 14}).relate({d: 23}).swap.swap_.c === 14
+_({c: 14}).relate({d: 23}).swap.swap_.d === undefined
 
-_({c: 14}).relate(t1);
+_({c: 14}).relate(t1)
 _(t1).swap._.c === 14
 
 //list 
