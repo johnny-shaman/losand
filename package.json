@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/johnny-shaman/losand.git"
+    "url": "git+https://github.com/johnny-shaman/losand.old.git"
   },
   "keywords": [
     "functional",
@@ -23,7 +23,7 @@
   "author": "Noboru Okazaki",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/johnny-shaman/losand/issues"
+    "url": "https://github.com/johnny-shaman/losand.old/issues"
   },
-  "homepage": "https://github.com/johnny-shaman/losand#readme"
+  "homepage": "https://github.com/johnny-shaman/losand.old#readme"
 }

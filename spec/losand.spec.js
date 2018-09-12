@@ -547,7 +547,7 @@ describe("test of losand", function () {
   );
 
   it(
-    ".relatea and swap is wrapped Object pairing argumentate Object #1",
+    ".relate and swap is wrapped Object pairing argumentate Object #1",
     () => expect(
       _(b).relate(a).swap._
     ).toBe(
@@ -556,7 +556,7 @@ describe("test of losand", function () {
   );
 
   it(
-    ".relatea and swap is wrapped Object pairing argumentate Object #2",
+    ".relate and swap is wrapped Object pairing argumentate Object #2",
     () => expect(
       _(b).relate(a).swap.swap._
     ).toBe(
@@ -697,28 +697,23 @@ describe("test of losand", function () {
 
   it(
     ".hybrid is inserting to Wrapped Object's Prototype chain",
-    () => expect(
-      _(EETest).fork(
+    () => {
+      let t = _(EETest).fork(
         _(new Function()).hybrid({
           childStaticValue: 283
         })._
-      ).from._.childStaticValue
-    ).toBe(
-      283
-    )
-  );
-
-  it(
-    ".hybrid is inserting to Wrapped Object's Prototype chain",
-    () => expect(
-      _(EETest).fork(
-        _(new Function()).hybrid({
-          childStaticValue: 283
-        })._
-      ).from.from._
-    ).toBe(
-      EETest.prototype
-    )
+      );
+      expect(
+        t.from._.childStaticValue
+      ).toBe(
+        283
+      );
+      expect(
+        t.from.from._
+      ).toBe(
+        EETest.prototype
+      );
+    }
   );
 
   it(
