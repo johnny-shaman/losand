@@ -26,12 +26,13 @@ describe("test of losand", function () {
   const nulledObj0 = {a: null, b: 2, c: 3};
   const nulledObj1 = {a: 1, b: null, c: 3};
   const nulledObj2 = {a: 1, b: 2, c: null};
-  const voidObj0 = {a: null, b: 2, c: 3};
-  const voidObj1 = {a: 1, b: null, c: 3};
-  const voidObj2 = {a: 1, b: 2, c: null};
+  const voidObj0 = {a: _._, b: 2, c: 3};
+  const voidObj1 = {a: 1, b: _._, c: 3};
+  const voidObj2 = {a: 1, b: 2, c: _._};
 
   const fulfillObj = {a: 0, b: true, c: false};
   const fulfillAry = [0, true, false];
+  const toposObj = {a: {b: {c: 3}}};
 
   const triargF = (x, y, z) => (x + y) * z;
 
@@ -452,6 +453,49 @@ describe("test of losand", function () {
   );
 
   it(
+    ".entries get wrapped Object's entries Array",
+    () => expect(
+      _(a).entries._[0][0]
+    ).toBe(
+      "a"
+    )
+  );
+
+  it(
+    ".get get Object's property's property's ... ",
+    () =>{
+      expect(
+        _(toposObj).get("a", "b", "c")._
+      ).toBe(
+        3
+      );
+      expect(
+        _(toposObj).get("a", "c", "b")._
+      ).toBe(
+        _._
+      );
+    }
+  );
+
+  it(
+    ".set set Object's property's property's ... ",
+    () =>{
+      _(toposObj).set(8, "a", "b", "c");
+      _(toposObj).set(4, "a", "c", "b");
+      expect(
+        toposObj.a.b.c
+      ).toBe(
+        8
+      );
+      expect(
+        toposObj.a.c.b
+      ).toBe(
+        4
+      );
+    }
+  );
+
+  it(
     ".draw is wrapped Object assign from argumentate Object",
     () => expect(
       _(a).draw({b : 2})._
@@ -472,7 +516,7 @@ describe("test of losand", function () {
   it(
     ".hold on arguments keys return copied new one",
     () => expect(
-      _({a: 13, b: 24, c: 51, d: 40}).hold("a", "c").vals._.reduce((p, c) => p + c, 0)
+      _({a: 13, b: 24, c: 51, d: 40}).hold("a", "c", "f").vals._.reduce((p, c) => p + c, 0)
     ).toBe(
       13 + 51
     )
@@ -481,7 +525,7 @@ describe("test of losand", function () {
   it(
     ".crop out arguments keys return copied new one",
     () => expect(
-      _({a: 13, b: 24, c: 51, d: 39}).crop("a", "c").vals._.reduce((p, c) => p + c, 0)
+      _({a: 13, b: 24, c: 51, d: 39}).crop("a", "c", "f").vals._.reduce((p, c) => p + c, 0)
     ).toBe(
       24 + 39
     )
@@ -490,7 +534,7 @@ describe("test of losand", function () {
   it(
     ".pick up keys return copied new one",
     () => expect(
-      _(["a", "c"]).pick({a: 13, b: 24, c: 51, d: 40}).vals._.reduce((p, c) => p + c, 0)
+      _(["a", "c", "f"]).pick({a: 13, b: 24, c: 51, d: 40}).vals._.reduce((p, c) => p + c, 0)
     ).toBe(
       13 + 51
     )
@@ -499,27 +543,18 @@ describe("test of losand", function () {
   it(
     ".drop out arguments keys return copied new one",
     () => expect(
-      _(["a", "c"]).drop({a: 13, b: 24, c: 51, d: 39}).vals._.reduce((p, c) => p + c, 0)
+      _(["a", "c", "f"]).drop({a: 13, b: 24, c: 51, d: 39}).vals._.reduce((p, c) => p + c, 0)
     ).toBe(
       24 + 39
     )
   );
 
   it(
-    ".exists on arguments keys return copied new one",
+    ".valid get valid Object on Wraped Object",
     () => expect(
-      _({a: 13, b: 24, c: 51, d: 39}).exists("a", "c", "f")._.join()
-    ).toBe(
-      "a,c"
-    )
-  );
-
-  it(
-    ".except on arguments keys return copied new one",
-    () => expect(
-      _({a: 13, b: 24, c: 51, d: 39}).except("a", "c", "f")._.join()
-    ).toBe(
-      "b,d"
+      _({a: _._, b: null, c: false}).valid.keys._
+    ).toEqual(
+      ["c"]
     )
   );
 

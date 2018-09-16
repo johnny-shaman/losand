@@ -1,6 +1,6 @@
 {
   "name": "losand",
-  "version": "0.3.34",
+  "version": "0.3.4",
   "description": "losand is a monad on Javascript",
   "main": "losand.js",
   "scripts": {
@@ -21,9 +21,10 @@
     "browser"
   ],
   "author": "Noboru Okazaki",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/johnny-shaman/losand.old/issues"
   },
-  "homepage": "https://github.com/johnny-shaman/losand.old#readme"
+  "homepage": "https://github.com/johnny-shaman/losand.old#readme",
+  "dependencies": {}
 }

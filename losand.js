@@ -1,11 +1,6 @@
 (() => {
   "use strict";
 
-
-  Object.values = Object.values || function (o) {
-    return Object.keys(o).map(k => o[k]);
-  };
-
   let _ = function (v, re) {
     return Object.create(_.prototype, {
       "@": {
@@ -123,6 +118,31 @@
         return this.map(Object.values);
       }
     },
+    entries: {
+      configurable: true,
+      get () {
+        return this.map(Object.entries);
+      }
+    },
+    get: {
+      configurable: true,
+      value (...k) {
+        return this.map(t => k.reduce((p, c) => _(p)[""] ? _._ : p[c], t));
+      }
+    },
+    set: {
+      configurable: true,
+      value (v, ...k) {
+        return this.$(
+          t => _(k).map(l => l.pop()).bind(
+            l => _(
+              k.reduce((p, c) => _(p[c])[""] ? _(p).draw({[c]: {}})._[c] : p[c], t)
+            )
+            .draw({[l]: v})
+          )
+        );
+      }
+    },
     draw: {
       configurable: true,
       value (...o) {
@@ -139,7 +159,7 @@
       configurable: true,
       value (...v) {
         return this.bind(
-          o => v.reduce((p, c) => p.draw({[c]: o[c]}), this.other())
+          o => v.reduce((p, c) => _(o[c])[""] ? p : p.draw({[c]: o[c]}), this.other())
         );
       }
     },
@@ -161,18 +181,10 @@
         return this.bind(a => _(o).crop(...a));
       }
     },
-    exists: {
+    valid: {
       configurable: true,
-      value (...v) {
-        return this.bind(o => _(v).map(a => a.filter(k => o[k] !== undefined)));
-      }
-    },
-    except: {
-      configurable: true,
-      value (...v) {
-        return this.bind(
-          o => _(v).map(a => _(o).keys._.filter(k => !a.includes(k)))
-        );
+      get () {
+        return this.hold(...this.keys._);
       }
     },
     turn: {
@@ -223,8 +235,7 @@
     give: {
       configurable: true,
       value (f, ...v) {
-        this.keys._.forEach(k => f(k, this["@"][k], ...v));
-        return this;
+        return this.$(t => _(t).entries.$(i => i.forEach(([k, v]) => f(k, v))));
       }
     },
     list: {

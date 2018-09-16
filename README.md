@@ -155,6 +155,14 @@ _({r: 128}).keys._[0] === "r"
 //vals
 _({r: 128}).vals._[0] === 128
 
+//get
+_({a: {b: {c: 3}}}).get("a", "b", "c")._ === 3
+_({a: {b: {c: 3}}}).get("c", "b", "a")._ === undefined
+
+//set
+_({a: {b: {c: 3}}}).set(8, "a", "b", "c")._ // {a: {b: {c: 8}}}
+_({}).set(4, "c", "b", "a")._ // {c: {b: {a: 4}}}
+
 //draw is wrapped Object assign from argumentate Object
 _({a: 3}).draw({b: 5}).$($ => {
   $.a === 3 // {a: 3} is wrapped on having
@@ -168,22 +176,16 @@ _({a: 3}).cast({b: 5}).$($ => {
 })
 
 //hold on wrapped Object from arguments and other object have same inheritance
-_({a: 13, b: 24, c: 51, d: 40}).hold("a", "c")._ // {a: 13, c: 51}
+_({a: 13, b: 24, c: 51, d: 40}).hold("a", "c", "f")._ // {a: 13, c: 51}
 
 //crop out of wrapped Object from arguments and other object have same inheritance
-_({a: 13, b: 24, c: 51, d: 40}).crop("a", "c")._ // {b: 24, d: 40}
+_({a: 13, b: 24, c: 51, d: 40}).crop("a", "c", "f")._ // {b: 24, d: 40}
 
 //pick up wrapped Array to argument Object and other object have same inheritance
-_(["a", "c"]).pick({a: 13, b: 24, c: 51, d: 40})._ // {a: 13, c: 51}
+_(["a", "c", "f"]).pick({a: 13, b: 24, c: 51, d: 40})._ // {a: 13, c: 51}
 
 //drop out wrapped Array from argument Object and other object have same inheritance
-_(["a", "c"]).drop({a: 13, b: 24, c: 51, d: 40})._ // {b: 24, d: 40}
-
-//exists on wrapped Object's keys from arguments
-_({a: 13, b: 24, c: 51, d: 40}).exists("a", "c", "f")._ // ["a", "c"]
-
-//except on wrapped Object's keys from arguments
-_({a: 13, b: 24, c: 51, d: 40}).except("a", "c", "f")._ // ["b", "d"]
+_(["a", "c", "f"]).drop({a: 13, b: 24, c: 51, d: 40})._ // {b: 24, d: 40}
 
 //turn is turn to key value pairing
 _(["a", "b", "c"]).turn._ // {a: 0, b: 1, c: 2}
@@ -328,4 +330,13 @@ _(eeTest).once({
   "post": () => {},
   "delete": () => {}
 })
+
+//Example with Promise
+
+const promise = new Promise((res, rej) => {
+  res({});
+})
+.then(v => _(v))
+.then(v => v.draw({foo: "bar"}))
+.then(v => v.map(t => t.foo));
 ~~~
