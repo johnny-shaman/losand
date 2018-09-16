@@ -327,7 +327,7 @@
 
   _(_).draw({
     pair: new Map(),
-    version: "losand@0.3.3",
+    version: "losand@0.3.4",
     lib: "losand",
     get _ () {
       return void 0;
