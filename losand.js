@@ -198,14 +198,37 @@
     relate: {
       configurable: true,
       value (o) {
-        _.pair.set(this["@"], o).set(o, this["@"]);
-        return this;
+        return this.$(t => _.pair.set(t, o).set(o, t));
       }
     },
     swap: {
       configurable: true,
       get () {
         return this.map(m => _.pair.get(m));
+      }
+    },
+    setUpper: {
+      configurable: true,
+      value (v) {
+        return this.$(t => _.upper.set(t, v)).$(t => _.lower.set(v, t));
+      }
+    },
+    setLower: {
+      configurable: true,
+      value (v) {
+        return this.$(t => _.lower.set(t, v)).$(t => _.upper.set(v, t));
+      }
+    },
+    upper: {
+      configurable: true,
+      get () {
+        return this.map(t => _.upper.get(t));
+      }
+    },
+    lower: {
+      configurable: true,
+      get () {
+        return this.map(t => _.lower.get(t));
       }
     },
     define: {
@@ -327,7 +350,9 @@
 
   _(_).draw({
     pair: new Map(),
-    version: "losand@0.3.4",
+    upper: new Map(),
+    lower: new Map(),
+    version: "losand@0.3.5",
     lib: "losand",
     get _ () {
       return void 0;

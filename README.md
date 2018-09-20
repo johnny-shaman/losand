@@ -201,6 +201,24 @@ _({c: 14}).relate({d: 23}).swap.swap_.d === undefined
 _({c: 14}).relate(t1)
 _(t1).swap._.c === 14
 
+//setUpper set upper Layer Object
+_({c: 14}).setUpper({d: 23}).upper._.c === undefined
+_({c: 14}).setUpper({d: 23}).upper._.d === 23
+_({c: 14}).setUpper({d: 23}).upper.lower._.c === 14
+_({c: 14}).setUpper({d: 23}).upper.lower._.d === undefined
+
+//setLower set lower Layer Object
+_({c: 14}).setLower({d: 23}).lower._.c === undefined
+_({c: 14}).setLower({d: 23}).Lower._.d === 23
+_({c: 14}).setlower({d: 23}).lower.upper._.c === 14
+_({c: 14}).setLower({d: 23}).lower.upper._.d === undefined
+
+/*
+lower and upper layering model
+lower Map !== upper Map
+*/
+_({c: 14}).setUpper({d: 23}).setLower({b: 64}).lower.upper.upper._.d === 23
+
 //list 
 _({2: 24, 0: 1, 1: 35}).list // [1, 35, 24]
 
