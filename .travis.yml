@@ -22,7 +22,3 @@ script:
 
 after_script:
   - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
-  - "cat /home/travis/build/johnny-shaman/losand/coverage/*"
-  - "cat /home/travis/build/johnny-shaman/losand/coverage/lcov-report/*"
-  - "cat /home/travis/build/johnny-shaman/losand/coverage/lcov-report/*/*"
-  - "cat /home/travis/build/johnny-shaman/losand/coverage/lcov-report/*/*/*"
