@@ -1,7 +1,8 @@
 # \_(losand).\_
 ## \_(losand).\_ is a monad imprementation on any Javascript
-[![Test Coverage](https://api.codeclimate.com/v1/badges/45d321f4643298421891/test_coverage)](https://codeclimate.com/github/johnny-shaman/losand/test_coverage)
-[![Build Status](https://travis-ci.org/johnny-shaman/losand.old.svg?branch=master)](https://travis-ci.org/johnny-shaman/losand)
+[![Maintainability](https://api.codeclimate.com/v1/badges/bb24ccbb4103dec4837f/maintainability)](https://codeclimate.com/github/johnny-shaman/losand/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/bb24ccbb4103dec4837f/test_coverage)](https://codeclimate.com/github/johnny-shaman/losand/test_coverage)
+[![Build Status](https://travis-ci.org/johnny-shaman/losand.svg?branch=master)](https://travis-ci.org/johnny-shaman/losand)
 ## Usage
 
 ### node
@@ -19,7 +20,7 @@ importScripts("./lib/losand.js")
 ~~~
 ### browser
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@0.3.61/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.3.62/losand.js"></script>
 ~~~
 
 ~~~javascript
