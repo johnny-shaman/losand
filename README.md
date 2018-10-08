@@ -1,7 +1,7 @@
 # \_(losand).\_
 ## \_(losand).\_ is a monad imprementation on any Javascript
-[![Test Coverage](https://api.codeclimate.com/v1/badges/45d321f4643298421891/test_coverage)](https://codeclimate.com/github/johnny-shaman/losand.old/test_coverage)
-[![Build Status](https://travis-ci.org/johnny-shaman/losand.old.svg?branch=master)](https://travis-ci.org/johnny-shaman/losand.old)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/45d321f4643298421891/test_coverage)](https://codeclimate.com/github/johnny-shaman/losand/test_coverage)
+[![Build Status](https://travis-ci.org/johnny-shaman/losand.old.svg?branch=master)](https://travis-ci.org/johnny-shaman/losand)
 ## Usage
 
 ### node
@@ -19,7 +19,7 @@ importScripts("./lib/losand.js")
 ~~~
 ### browser
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@0.3.5/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@0.3.6/losand.js"></script>
 ~~~
 
 ~~~javascript
@@ -162,6 +162,28 @@ _({a: {b: {c: 3}}}).get("c", "b", "a")._ === undefined
 _({a: {b: {c: 3}}}).set(8, "a", "b", "c")._ // {a: {b: {c: 8}}}
 _({}).set(4, "c", "b", "a")._ // {c: {b: {a: 4}}}
 
+//been present methods and properties settings on wrapped Object's
+const BT = _(function (v) {
+  this.v = v;
+})
+.affix({
+  a (v) {
+    this.v += v;
+    return this.v;
+  },
+  b (v) {
+    this.v += v;
+    return this;
+  },
+  c (v) {
+    this.v += v;
+  },
+})._
+
+_(new BT(3)).been.a(3).b(3).c(3)._ === 12
+_(new BT(3)).been.a(3).b(3).c(3).to     // return to _(_(new BT(3)).been.a(3).b(3).c(3)._)
+_(new BT(3)).been.v(5).d(3, "e").e(3)._ // BT{v: 5, d: {e: 3}, e: 3}
+
 //draw is wrapped Object assign from argumentate Object
 _({a: 3}).draw({b: 5}).$($ => {
   $.a === 3 // {a: 3} is wrapped on having
@@ -200,24 +222,6 @@ _({c: 14}).relate({d: 23}).swap.swap_.d === undefined
 
 _({c: 14}).relate(t1)
 _(t1).swap._.c === 14
-
-//setUpper set upper Layer Object
-_({c: 14}).setUpper({d: 23}).upper._.c === undefined
-_({c: 14}).setUpper({d: 23}).upper._.d === 23
-_({c: 14}).setUpper({d: 23}).upper.lower._.c === 14
-_({c: 14}).setUpper({d: 23}).upper.lower._.d === undefined
-
-//setLower set lower Layer Object
-_({c: 14}).setLower({d: 23}).lower._.c === undefined
-_({c: 14}).setLower({d: 23}).Lower._.d === 23
-_({c: 14}).setlower({d: 23}).lower.upper._.c === 14
-_({c: 14}).setLower({d: 23}).lower.upper._.d === undefined
-
-/*
-lower and upper layering model
-lower Map !== upper Map
-*/
-_({c: 14}).setUpper({d: 23}).setLower({b: 64}).lower.upper.upper._.d === 23
 
 //list 
 _({2: 24, 0: 1, 1: 35}).list // [1, 35, 24]

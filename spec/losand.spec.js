@@ -52,6 +52,23 @@ describe("test of losand", function () {
 
   it("testing b", () => expect(b(10).b).toBe(10));
   it("_._", () => expect(_._).toBe(undefined));
+  
+  const _beenTest = _(function (v) {
+    this.v = v;
+  })
+  .affix({
+    a (v) {
+      this.v += v;
+      return this.v;
+    },
+    b (v) {
+      this.v += v;
+      return this;
+    },
+    c (v) {
+      this.v += v;
+    },
+  })._;
 
   it(
     "join",
@@ -479,7 +496,7 @@ describe("test of losand", function () {
 
   it(
     ".set set Object's property's property's ... ",
-    () =>{
+    () => {
       _(toposObj).set(8, "a", "b", "c");
       _(toposObj).set(4, "a", "c", "b");
       expect(
@@ -491,6 +508,27 @@ describe("test of losand", function () {
         toposObj.a.c.b
       ).toBe(
         4
+      );
+    }
+  );
+
+  it(
+    ".been wraped Object's method chaining",
+    () => {
+      expect(
+        _(new _beenTest(3)).been.a(3).b(3).c(3)._.v
+      ).toBe(
+        12
+      );
+      expect(
+        _(new _beenTest(3)).been.d(3, "e").to._.d.e
+      ).toBe(
+        3
+      );
+      expect(
+        _(null).been.d(3, "e").to._
+      ).toBe(
+        null
       );
     }
   );

@@ -31,7 +31,7 @@
     be: {
       configurable: true,
       value (f, ...v) {
-        return this.map(t => f(t, ...v) ? t : _._);
+        return this.map(t => f(t, ...v) ? t : undefined);
       }
     },
     is: {
@@ -55,7 +55,7 @@
     fulfill: {
       configurable: true,
       get () {
-        return !(this.vals._.includes(_._) || this.vals._.includes(null));
+        return !(this.vals._.includes(undefined) || this.vals._.includes(null));
       }
     },
     join: {
@@ -127,7 +127,7 @@
     get: {
       configurable: true,
       value (...k) {
-        return this.map(t => k.reduce((p, c) => _(p)[""] ? _._ : p[c], t));
+        return this.map(t => k.reduce((p, c) => _(p)[""] ? undefined : p[c], t));
       }
     },
     set: {
@@ -141,6 +141,23 @@
             .draw({[l]: v})
           )
         );
+      }
+    },
+    been: {
+      configurable: true,
+      get () {
+        return new Proxy(this, {
+          get (t, k, r) {
+            switch (k) {
+              case "to": return t;
+              case "_" : return t._;
+              default: switch (t.get(k).by._) {
+                case Function : return (...v) => t.$(w => w[k](...v)).been;
+                default: return (v, ...l) => (l.unshift(k), t.set(v, ...l).been);
+              }
+            }
+          }
+        });
       }
     },
     draw: {
@@ -205,30 +222,6 @@
       configurable: true,
       get () {
         return this.map(m => _.pair.get(m));
-      }
-    },
-    setUpper: {
-      configurable: true,
-      value (v) {
-        return this.$(t => _.upper.set(t, v)).$(t => _.lower.set(v, t));
-      }
-    },
-    setLower: {
-      configurable: true,
-      value (v) {
-        return this.$(t => _.lower.set(t, v)).$(t => _.upper.set(v, t));
-      }
-    },
-    upper: {
-      configurable: true,
-      get () {
-        return this.map(t => _.upper.get(t));
-      }
-    },
-    lower: {
-      configurable: true,
-      get () {
-        return this.map(t => _.lower.get(t));
       }
     },
     define: {
@@ -350,9 +343,8 @@
 
   _(_).draw({
     pair: new Map(),
-    upper: new Map(),
-    lower: new Map(),
-    version: "losand@0.3.5",
+    rule: {},
+    version: "losand@0.3.6",
     lib: "losand",
     get _ () {
       return void 0;
