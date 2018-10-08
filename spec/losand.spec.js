@@ -638,24 +638,6 @@ describe("test of losand", function () {
   );
 
   it(
-    ".setUpper and upper is wrapped Object pairing argumentate Object #2",
-    () => expect(
-      _(a).setUpper(b).upper._
-    ).toBe(
-      b
-    )
-  );
-
-  it(
-    ".setLower and lower is wrapped Object pairing argumentate Object #2",
-    () => expect(
-      _(h).setLower(k).lower._
-    ).toBe(
-      k
-    )
-  );
-
-  it(
     ".create is create a new Object inherit on wrapped Object ",
     () => expect(
       Object.getPrototypeOf(_(a).create({})._)
