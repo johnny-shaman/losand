@@ -326,129 +326,79 @@ describe("test of losand", function () {
   );
 
   it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(nulledAry0).fulfill
-    ).toBe(
-      false
-    )
-  );
-
-  it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(nulledAry1).fulfill
-    ).toBe(
-      false
-    )
-  );
-
-  it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(nulledAry2).fulfill
-    ).toBe(
-      false
-    )
-  );
-
-  it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(voidAry0).fulfill
-    ).toBe(
-      false
-    )
-  );
-
-  it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(voidAry1).fulfill
-    ).toBe(
-      false
-    )
-  );
-
-  it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(voidAry2).fulfill
-    ).toBe(
-      false
-    )
-  );
-
-  it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(nulledObj0).fulfill
-    ).toBe(
-      false
-    )
-  );
-
-  it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(nulledObj1).fulfill
-    ).toBe(
-      false
-    )
-  );
-
-  it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(nulledObj2).fulfill
-    ).toBe(
-      false
-    )
-  );
-
-  it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(voidObj0).fulfill
-    ).toBe(
-      false
-    )
-  );
-
-  it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(voidObj1).fulfill
-    ).toBe(
-      false
-    )
-  );
-
-  it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(voidObj2).fulfill
-    ).toBe(
-      false
-    )
-  );
-
-  it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(fulfillAry).fulfill
-    ).toBe(
-      true
-    )
-  );
-
-  it(
-    ".fulfill test all and truely return just",
-    () => expect(
-      _(fulfillObj).fulfill
-    ).toBe(
-      true
-    )
+    ".fullen test all and truely return just",
+    () => {
+      expect(
+        _(nulledAry0).fullen
+      ).toBe(
+        false
+      );
+      expect(
+        _(nulledAry1).fullen
+      ).toBe(
+        false
+      );
+      expect(
+        _(nulledAry2).fullen
+      ).toBe(
+        false
+      );
+      expect(
+        _(voidAry0).fullen
+      ).toBe(
+        false
+      );
+      expect(
+        _(voidAry1).fullen
+      ).toBe(
+        false
+      );
+      expect(
+        _(voidAry2).fullen
+      ).toBe(
+        false
+      );
+      expect(
+        _(nulledObj0).fullen
+      ).toBe(
+        false
+      );
+      expect(
+        _(nulledObj1).fullen
+      ).toBe(
+        false
+      );
+      expect(
+        _(nulledObj2).fullen
+      ).toBe(
+        false
+      );
+      expect(
+        _(voidObj0).fullen
+      ).toBe(
+        false
+      );
+      expect(
+        _(voidObj1).fullen
+      ).toBe(
+        false
+      );
+      expect(
+        _(voidObj2).fullen
+      ).toBe(
+        false
+      );
+      expect(
+        _(fulfillAry).fullen
+      ).toBe(
+        true
+      );
+      expect(
+        _(fulfillObj).fullen
+      ).toBe(
+        true
+      );
+    }
   );
 
   it(
@@ -791,45 +741,45 @@ describe("test of losand", function () {
 
   it(
     ".part is carrying function",
-    () => expect(
-      _(triargF).part(_._, 4, 2)(1)._
-    ).toBe(
-      10
-    )
-  );
-
-  it(
-    ".part is carrying function",
-    () => expect(
-      _(triargF).part(_._, null, 2)(1)(4)._
-    ).toBe(
-      10
-    )
-  );
-
-  it(
-    ".part is carrying function",
-    () => expect(
-      _(triargF).part(null, 4, _._)(1)(2)._
-    ).toBe(
-      10
-    )
-  );
-
-  it(
-    ".cache & .recache presence delay evaluation",
-    () => {
-      const _triargF = _(triargF);
-      _triargF.cache(1, 4, 2);
-      _triargF.cache(3, 5, 7);
-      _triargF.cache(9, 11, 13);
-      expect(_triargF.cache()._).toBe(10);
-      _triargF.recache(4, 6, 2);
-      _triargF.cache(3, 5, 7);
-      _triargF.cache(9, 11, 13);
-      expect(_triargF.cache()._).toBe(20);
+    () => { 
+      expect(
+        _(triargF).part(_._, 4, 2)(1)._
+      ).toBe(
+        10
+      );
+      expect(
+        _(triargF).part(_._, null, 2)(1)(4)._
+      ).toBe(
+        10
+      );
+      expect(
+        _(triargF).part(null, 4, _._)(1)(2)._
+      ).toBe(
+        10
+      );
     }
   );
+
+  it(
+    ".done & .redo presence delay evaluation",
+    () => {
+      const _triargF = _(triargF);
+      _triargF.done(1, 4, 2);
+      _triargF.done(3, 5, 7);
+      _triargF.done(9, 11, 13);
+      expect(_triargF.done()._).toBe(10);
+      _triargF.redo(4, 6, 2);
+      _triargF.done(3, 5, 7);
+      _triargF.done(9, 11, 13);
+      expect(_triargF.done()._).toBe(20);
+    }
+  );
+
+  it(
+    ".apply to apply function's chain on wrapped value",
+    () => expect(_(10).apply(v => v + 10, v => v * 3)._).toBe(60)
+  );
+  
 
   it(
     ".once",
@@ -855,6 +805,15 @@ describe("test of losand", function () {
       ary.each
     ).toBe(
       ary.forEach
+    )
+  );
+
+  it(
+    "Array.prototype.foldR === Array.prototype.reduceRight",
+    () => expect(
+      ary.foldR
+    ).toBe(
+      ary.reduceRight
     )
   );
 

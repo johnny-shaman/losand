@@ -52,7 +52,7 @@
         return this["@"] === undefined || this["@"] === null;
       }
     },
-    fulfill: {
+    fullen: {
       configurable: true,
       get () {
         return !(this.vals._.includes(undefined) || this.vals._.includes(null));
@@ -127,7 +127,7 @@
     get: {
       configurable: true,
       value (...k) {
-        return this.map(t => k.reduce((p, c) => _(p)[""] ? undefined : p[c], t));
+        return this.map(t => k.foldL((p, c) => _(p)[""] ? undefined : p[c], t));
       }
     },
     set: {
@@ -136,7 +136,9 @@
         return this.$(
           t => _(k).map(l => l.pop()).bind(
             l => _(
-              k.reduce((p, c) => _(p[c])[""] ? _(p).draw({[c]: {}})._[c] : p[c], t)
+              k.foldL(
+                (p, c) => _(p[c])[""] ? _(p).draw({[c]: {}})._[c] : p[c], t
+              )
             )
             .draw({[l]: v})
           )
@@ -176,7 +178,9 @@
       configurable: true,
       value (...v) {
         return this.bind(
-          o => v.reduce((p, c) => _(o[c])[""] ? p : p.draw({[c]: o[c]}), this.other())
+          o => v.foldL(
+            (p, c) => _(o[c])[""] ? p : p.draw({[c]: o[c]}), this.other()
+          )
         );
       }
     },
@@ -208,7 +212,7 @@
       configurable: true,
       get () {
         return this.keys.bind(
-          a => a.reduce((p, c) => p.draw({[this["@"][c]]: c}), _({}))
+          a => a.foldL((p, c) => p.draw({[this["@"][c]]: c}), _({}))
         );
       }
     },
@@ -320,12 +324,12 @@
     part: {
       configurable: true,
       value (...v) {
-        return _(v).fulfill
+        return _(v).fullen
         ? this.map(f => f(...v))
-        : (...vv) => this.part(...v.adapt(...vv));
+        : (...vv) => this.part(...v.adaptL(...vv));
       }
     },
-    cache: {
+    done: {
       configurable: true,
       value (...v) {
         return this.cached === undefined
@@ -333,17 +337,23 @@
         : this.cached;
       }
     },
-    recache: {
+    redo: {
       configurable: true,
       value (...v) {
-        return _(this).draw({cached: undefined})._.cache(...v);
+        return _(this).draw({cached: undefined})._.done(...v);
+      }
+    },
+    apply: {
+      configurable: true,
+      value (...v) {
+        return this.map(t => v.foldL((a, f) => f(a), t));
       }
     }
   });
 
   _(_).draw({
     pair: new Map(),
-    version: "1.0.0",
+    version: "1.0.1",
     lib: "losand",
     get _ () {
       return void 0;
@@ -357,37 +367,61 @@
         return this.forEach;
       }
     },
+    foldL: {
+      configurable: true,
+      get () {
+        return this.reduce;
+      }
+    },
+    foldR: {
+      configurable: true,
+      get () {
+        return this.reduceRight;
+      }
+    },
     aMap: {
       configurable: true,
       value (a) {
         return Array.prototype.concat.call(
           [],
           ...(
-            this.reduce((p, c) => c.constructor === Function || p, false)
+            this.foldL((p, c) => c.constructor === Function || p, false)
             ? this
             : a
           )
         .map(
           f => (
-            this.reduce((p, c) => c.constructor === Function || p, false)
+            this.foldL((p, c) => c.constructor === Function || p, false)
             ? a.map(f)
             : this.map(f)
           )
         ));
       }
     },
-    adapt: {
+    adaptL: {
       configurable: true,
       value (...a) {
         return this.map(v => !(v === undefined || v === null) ? v : a.shift());
       }
     },
-    adaptRight: {
+    adaptR: {
       configurable: true,
       value (...a) {
-        return this.adapt(...a.reverse());
+        return this.adaptL(...a.reverse());
       }
-    }
+    },
+    adapt: {
+      configurable: true,
+      get () {
+        return this.adaptL;
+      }
+    },
+    adaptRight: {
+      configurable: true,
+      get () {
+        return this.adaptR;
+      }
+    },
   });
 
   _(String).annex({

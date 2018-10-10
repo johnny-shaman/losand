@@ -20,7 +20,7 @@ importScripts("./lib/losand.js")
 ~~~
 ### browser
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@1.0.0/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@1.0.1/losand.js"></script>
 ~~~
 
 ~~~javascript
@@ -141,13 +141,13 @@ _({a: 1}).isnt(Object).re._ // {a: 1}
 _(3).be(v => v === 3)._ === 3
 _(3).be(v => v !== 3)._ === undefined
 
-//fulfill check all value isn't undefined or null
-_({a: 3, b: undefined}).fulfill === false
-_({a: null, b: 4}).fulfill === false
-_({a: 3, b: 4}).fulfill === true
-_([undefined, 2]).fulfill === false
-_([4, null]).fulfill === false
-_([4, 2]).fulfill === true
+//fullen check all value isn't undefined or null
+_({a: 3, b: undefined}).fullen === false
+_({a: null, b: 4}).fullen === false
+_({a: 3, b: 4}).fullen === true
+_([undefined, 2]).fullen === false
+_([4, null]).fullen === false
+_([4, 2]).fullen === true
 
 //keys
 _({r: 128}).keys._[0] === "r"
@@ -305,19 +305,22 @@ Object.getPrototypeOf(
 ) === Array.prototype;
 
 //.part is patial applying
-_((x, y, z) => (x + y) * z).part(null, 2, undefined)(3)(4)
+_((x, y, z) => (x + y) * z).part(null, 2, undefined)(3)(4)._
 ===
-_((x, y, z) => (x + y) * z).part(null, 2, undefined)(3, 4)
+_((x, y, z) => (x + y) * z).part(null, 2, undefined)(3, 4)._
 ===
-_((x, y, z) => (x + y) * z).part(3, 2, 4)
+_((x, y, z) => (x + y) * z).part(3, 2, 4)._
 ===
-((x, y, z) => (x + y) * z)(3, 2, 4)
+((x, y, z) => (x + y) * z)(3, 2, 4)._
 
 //.cache presence delay and force
-_((x, y, z) => (x + y) * z).cache(3, 2, 4).re.cache(5, 3, 7)._ === 20
+_((x, y, z) => (x + y) * z).done(3, 2, 4).re.done(5, 3, 7)._ === 20
 
 //.recache presence delay and force mutate cached value
-_((x, y, z) => (x + y) * z).cache(3, 2, 4).re.recache(5, 3, 7)._ === 56
+_((x, y, z) => (x + y) * z).done(3, 2, 4).re.redo(5, 3, 7)._ === 56
+
+//.apply applying functions
+_(10).apply(v => v + 10, v => v * 3)._ === 60
 
 ~~~
 ## Event driven development
