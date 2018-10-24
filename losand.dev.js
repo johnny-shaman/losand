@@ -149,7 +149,7 @@
       configurable: true,
       get () {
         return new Proxy(this, {
-          get (t, k, r) {
+          get (t, k) {
             switch (k) {
               case "to": return t;
               case "_" : return t._;
@@ -254,7 +254,7 @@
     },
     give: {
       configurable: true,
-      value (f, ...v) {
+      value (f) {
         return this.$(t => _(t).entries.$(i => i.forEach(([k, v]) => f(k, v))));
       }
     },
@@ -353,7 +353,7 @@
 
   _(_).draw({
     pair: new Map(),
-    version: "1.0.1",
+    version: "1.1.0",
     lib: "losand",
     get _ () {
       return void 0;
@@ -421,7 +421,7 @@
       get () {
         return this.adaptR;
       }
-    },
+    }
   });
 
   _(String).annex({
@@ -437,7 +437,7 @@
     }
   });
 
-  _(this).is(Object).$(t => _(_).annex({
+  _(this).is(Object).$(() => _(_).annex({
     on: {
       configurable: true,
       value (d) {

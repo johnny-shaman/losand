@@ -1,14 +1,14 @@
 {
   "name": "losand",
-  "version": "1.0.1",
-  "description": "losand is a monad on Javascript",
-  "main": "losand.js",
+  "version": "1.1.0",
+  "description": "losand is a algebraic thinking on javascript",
+  "main": "losand.min.js",
   "scripts": {
     "test": "istanbul cover jasmine-node ./spec/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/johnny-shaman/losand.old.git"
+    "url": "git+https://github.com/johnny-shaman/losand.git"
   },
   "keywords": [
     "functional",
@@ -23,8 +23,8 @@
   "author": "Noboru Okazaki",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/johnny-shaman/losand.old/issues"
+    "url": "https://github.com/johnny-shaman/losand/issues"
   },
-  "homepage": "https://github.com/johnny-shaman/losand.old#readme",
+  "homepage": "https://github.com/johnny-shaman/losand#readme",
   "dependencies": {}
 }

@@ -16,11 +16,11 @@ const _ = require("losand")
 ### worker
 ex. inside ./lib subfolder
 ~~~javascript
-importScripts("./lib/losand.js")
+importScripts("./lib/losand.min.js")
 ~~~
 ### browser
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@1.0.1/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@1.1.0/losand.min.js"></script>
 ~~~
 
 ~~~javascript
