@@ -261,9 +261,11 @@
     list: {
       configurable: true,
       get () {
-        return this.bind(o => _(o).cast(this.keys["@"].filter(
-          (v, k) => !isNaN(Number(k))
-        )));
+        return this.map(
+          o => _(o.length)[""]
+          ? _(o).draw({length: _(o).keys._.length}).list._
+          : Array.from(o)
+        );
       }
     },
     json: {
