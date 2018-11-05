@@ -149,7 +149,7 @@
       configurable: true,
       get () {
         return new Proxy(this, {
-          get (t, k) {
+          get (t, k, r) {
             switch (k) {
               case "to": return t;
               case "_" : return t._;
