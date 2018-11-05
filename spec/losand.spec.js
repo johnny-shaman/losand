@@ -1,5 +1,5 @@
 describe("test of losand", function () {
-  const _ = require("../losand.min.js");
+  const _ = require("../losand.js");
   const EventEmitter = require("events").EventEmitter;
 
   const a = {a: 1};
