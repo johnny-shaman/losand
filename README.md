@@ -20,7 +20,7 @@ importScripts("./lib/losand.min.js")
 ~~~
 ### browser
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@1.1.0/losand.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@1.2.0/losand.min.js"></script>
 ~~~
 
 ~~~javascript
