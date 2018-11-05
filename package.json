@@ -2,7 +2,7 @@
   "name": "losand",
   "version": "1.2.0",
   "description": "losand is a algebraic thinking on javascript",
-  "main": "losand.min.js",
+  "main": "losand.js",
   "scripts": {
     "test": "istanbul cover jasmine-node ./spec/"
   },
