@@ -1,6 +1,6 @@
 {
   "name": "losand",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "losand is a algebraic thinking on javascript",
   "main": "losand.min.js",
   "scripts": {
