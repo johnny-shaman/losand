@@ -31,7 +31,7 @@
     be: {
       configurable: true,
       value (f, ...v) {
-        return this.map(t => f(t, ...v) ? t : undefined);
+        return f(this._, ...v) ? this : this.map(t => undefined);
       }
     },
     is: {
@@ -137,10 +137,10 @@
           t => _(k).map(l => l.pop()).bind(
             l => _(
               k.foldL(
-                (p, c) => _(p[c])[""] ? _(p).draw({[c]: {}})._[c] : p[c], t
+                (p, c) => _(p[c])[""] ? _(p).draw(() => ({[c]: {}}))._[c] : p[c], t
               )
             )
-            .draw({[l]: v})
+            .draw(() => ({[l]: v}))
           )
         );
       }
@@ -164,14 +164,14 @@
     },
     draw: {
       configurable: true,
-      value (...o) {
-        return this.map(Object.assign, ...o);
+      value (f, ...v) {
+        return this.map(Object.assign, this.map(f, ...v)._);
       }
     },
     cast: {
       configurable: true,
-      value (...o) {
-        return this.fit(Object.assign, ...o);
+      value (f, ...v) {
+        return this.fit(Object.assign, this.map(f, ...v)._);
       }
     },
     hold: {
@@ -179,7 +179,7 @@
       value (...v) {
         return this.bind(
           o => v.foldL(
-            (p, c) => _(o[c])[""] ? p : p.draw({[c]: o[c]}), this.other()
+            (p, c) => _(o[c])[""] ? p : p.draw(() => ({[c]: o[c]})), this.other()
           )
         );
       }
@@ -212,7 +212,7 @@
       configurable: true,
       get () {
         return this.keys.bind(
-          a => a.foldL((p, c) => p.draw({[this["@"][c]]: c}), _({}))
+          a => a.foldL((p, c) => p.draw(() => ({[this["@"][c]]: c})), _({}))
         );
       }
     },
@@ -249,7 +249,7 @@
     depend: {
       configurable: true,
       value (o) {
-        return this.bind(m => _(o).create().draw(m));
+        return this.bind(m => _(o).create().draw(() => m));
       }
     },
     give: {
@@ -263,7 +263,7 @@
       get () {
         return this.map(
           o => _(o.length)[""]
-          ? _(o).draw({length: _(o).keys._.length}).list._
+          ? _(o).draw(() => ({length: _(o).keys._.length})).list._
           : Array.from(o)
         );
       }
@@ -282,8 +282,8 @@
     },
     affix: {
       configurable: true,
-      value (...o) {
-        return this.$(m => _(m).from.draw(...o));
+      value (o) {
+        return this.$(m => _(m).from.draw(() => o));
       }
     },
     annex: {
@@ -296,15 +296,14 @@
       configurable: true,
       value (f) {
         return this.bind(
-          m => _(f)
-          .draw({prototype: _(m).from.create({
+          m => _(f).draw(f => ({prototype: _(m).from.create({
             constructor: {
               configurable: true,
               writable: true,
               enumerable: false,
               value: f
             }
-          }).draw(f.prototype)._})
+          }).draw(f => f.prototype)._}))
         );
       }
     },
@@ -312,14 +311,14 @@
       configurable: true,
       value (o) {
         return this.bind(
-          m => _(m).draw({prototype: _(m).from.from.create({
+          m => _(m).draw(() => ({prototype: _(m).from.from.create({
             constructor: {
               configurable: true,
               writable: true,
               enumerable: false,
               value: _(m).from.by._
             }
-          }).draw(o, _(m).from._)._})
+          }).draw(() => o, _(m).from._)._}))
         );
       }
     },
@@ -335,14 +334,14 @@
       configurable: true,
       value (...v) {
         return this.cached === undefined
-        ? _(this).draw({cached: this.map(f => f(...v))})._.cached
+        ? _(this).draw(m => ({cached: this.map(f => f(...v))}))._.cached
         : this.cached;
       }
     },
     redo: {
       configurable: true,
       value (...v) {
-        return _(this).draw({cached: undefined})._.done(...v);
+        return _(this).draw(m => ({cached: undefined}))._.done(...v);
       }
     },
     apply: {
@@ -353,14 +352,14 @@
     }
   });
 
-  _(_).draw({
+  _(_).draw(() => ({
     pair: new Map(),
-    version: "1.2.0",
+    version: "1.3.0",
     lib: "losand",
     get _ () {
       return void 0;
     }
-  });
+  }));
 
   _(Array).annex({
     each: {

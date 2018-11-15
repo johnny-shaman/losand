@@ -16,11 +16,11 @@ const _ = require("losand")
 ### worker
 ex. inside ./lib subfolder
 ~~~javascript
-importScripts("./lib/losand.min.js")
+importScripts("./lib/losand.js")
 ~~~
 ### browser
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@1.2.0/losand.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@1.3.0/losand.js"></script>
 ~~~
 
 ~~~javascript
@@ -186,15 +186,15 @@ _(new BT(3)).been.a(3).b(3).c(3).to     // return to _(_(new BT(3)).been.a(3).b(
 _(new BT(3)).been.v(5).d(3, "e").e(3)._ // BT{v: 5, d: {e: 3}, e: 3}
 
 //draw is wrapped Object assign from argumentate Object
-_({a: 3}).draw({b: 5}).$($ => {
-  $.a === 3 // {a: 3} is wrapped on having
+_({a: 3}).draw(a =>({b: 5})).$($ => {
+  $.a === 3 // {a: 3} is keeping
   $.b === 5
 })
 
 //cast is wrapped Object assign to argumentate Object
-_({a: 3}).cast({b: 5}).$($ => {
+_({a: 3}).cast(a => ({b: 5})).$($ => {
   $.a === 3 
-  $.b === 5 // {b: 5} is wrapped on having
+  $.b === 5 // {b: 5} is keeping
 })
 
 //hold on wrapped Object from arguments and other object have same inheritance
@@ -362,6 +362,6 @@ const promise = new Promise((res, rej) => {
   res({});
 })
 .then(v => _(v))
-.then(v => v.draw({foo: "bar"}))
+.then(v => v.draw(v => ({foo: foo(v)}))
 .then(v => v.map(t => t.foo));
 ~~~

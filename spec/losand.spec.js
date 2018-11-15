@@ -486,7 +486,7 @@ describe("test of losand", function () {
   it(
     ".draw is wrapped Object assign from argumentate Object",
     () => expect(
-      _(a).draw({b : 2})._
+      _(a).draw(() => ({b : 2}))._
     ).toBe(
       a
     )
@@ -495,7 +495,7 @@ describe("test of losand", function () {
   it(
     ".cast is wrapped Object assign to argumentate Object",
     () => expect(
-      _({b: 2}).cast(a)._
+      _({b: 2}).cast(() => a)._
     ).toBe(
       a
     )
@@ -708,11 +708,12 @@ describe("test of losand", function () {
   it(
     ".fork test #2",
     () => expect(
-      _(new Function()).fork(
-        _(new Function()).affix({
-          childStaticValue: 283
-        })._
-      ).from._.childStaticValue
+      _(new Function())
+      .fork(new Function())
+      .affix({
+        childStaticValue: 283
+      })
+      .from._.childStaticValue
     ).toBe(
       283
     )
@@ -721,11 +722,11 @@ describe("test of losand", function () {
   it(
     ".hybrid is inserting to Wrapped Object's Prototype chain",
     () => {
-      let t = _(EETest).fork(
-        _(new Function()).hybrid({
-          childStaticValue: 283
-        })._
-      );
+      let t = _(EETest)
+      .fork(new Function())
+      .hybrid({
+        childStaticValue: 283
+      });
       expect(
         t.from._.childStaticValue
       ).toBe(
