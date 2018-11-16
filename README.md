@@ -20,7 +20,7 @@ importScripts("./lib/losand.js")
 ~~~
 ### browser
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@1.3.0/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@1.4.0/losand.js"></script>
 ~~~
 
 ~~~javascript
@@ -186,13 +186,13 @@ _(new BT(3)).been.a(3).b(3).c(3).to     // return to _(_(new BT(3)).been.a(3).b(
 _(new BT(3)).been.v(5).d(3, "e").e(3)._ // BT{v: 5, d: {e: 3}, e: 3}
 
 //draw is wrapped Object assign from argumentate Object
-_({a: 3}).draw(a =>({b: 5})).$($ => {
+_({a: 3}).draw({b: 5}).$($ => {
   $.a === 3 // {a: 3} is keeping
   $.b === 5
 })
 
 //cast is wrapped Object assign to argumentate Object
-_({a: 3}).cast(a => ({b: 5})).$($ => {
+_({a: 3}).cast({b: 5}).$($ => {
   $.a === 3 
   $.b === 5 // {b: 5} is keeping
 })

@@ -486,7 +486,7 @@ describe("test of losand", function () {
   it(
     ".draw is wrapped Object assign from argumentate Object",
     () => expect(
-      _(a).draw(() => ({b : 2}))._
+      _(a).draw({b : 2})._
     ).toBe(
       a
     )
@@ -495,7 +495,7 @@ describe("test of losand", function () {
   it(
     ".cast is wrapped Object assign to argumentate Object",
     () => expect(
-      _({b: 2}).cast(() => a)._
+      _({b: 2}).cast(a)._
     ).toBe(
       a
     )
