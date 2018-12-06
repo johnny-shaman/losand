@@ -1,5 +1,5 @@
 describe("test of losand", function () {
-  const _ = require("../losand.js");
+  const _ = require("../losand.dev.js");
   const EventEmitter = require("events").EventEmitter;
 
   const a = {a: 1};
@@ -886,6 +886,22 @@ describe("test of losand", function () {
       "test".json._
     ).toBe(
       "test"
+    )
+  );
+  it(
+    "Number.prototype._ get Sequence Array",
+    () => expect(
+      5 ._(12)
+    ).toEqual(
+      [5, 6, 7, 8, 9, 10, 11, 12]
+    )
+  );
+  it(
+    "Number.prototype._ get Sequence Array",
+    () => expect(
+      2 ._(12, 4)
+    ).toEqual(
+      [2, 6, 10]
     )
   );
 });

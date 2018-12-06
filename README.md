@@ -20,7 +20,7 @@ importScripts("./lib/losand.js")
 ~~~
 ### browser
 ~~~html
-<script src="https://cdn.jsdelivr.net/npm/losand@1.4.0/losand.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/losand@1.5.0/losand.js"></script>
 ~~~
 
 ~~~javascript
@@ -270,6 +270,11 @@ _({a: 1}).json === JSON.stringify({a: 1})
 
 //[].adaptRight fill gapes like Array.prototype.pop()
 [2, 3, 4, undefined, 6, null].adaptRight(7, 5) // [2, 3, 4, 5, 6, 7]
+
+//Generate Sequence Array
+//x._(lim, step = 1) likely [x ... lim]
+2 ._(12);
+2 ._(26, 3);
 
 //String.prototype.json get _(parsed_object)
 _({a: 3}).json.json._.a === 3

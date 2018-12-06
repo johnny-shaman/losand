@@ -354,7 +354,7 @@
 
   _(_).draw({
     pair: new Map(),
-    version: "1.4.0",
+    version: "1.5.0",
     lib: "losand",
     get _ () {
       return void 0;
@@ -434,6 +434,20 @@
         } catch (e) {
           return _(this);
         }
+      }
+    }
+  });
+
+  _(Number).annex({
+    _ : {
+      configurable: true,
+      value (n, s = 1) {
+        return [...function* (v) {
+          yield v;
+          while (v + s <= n) {
+            yield v += s;
+          }
+        }(this.valueOf())];
       }
     }
   });
