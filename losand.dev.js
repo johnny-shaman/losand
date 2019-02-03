@@ -422,6 +422,12 @@
       get () {
         return this.adaptR;
       }
+    },
+    flat: {
+      configurable: true,
+      get () {
+        return this.foldL((a, v) => v instanceof Array ? Array.prototype.concat.call(a, v) : (a.push(v), a), []);
+      }
     }
   });
 

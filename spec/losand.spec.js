@@ -873,6 +873,15 @@ describe("test of losand", function () {
   );
 
   it(
+    "Array.prototype.flat",
+    () => expect(
+      [1, 2, 3, [4, 5]].flat
+    ).toEqual(
+      [1, 2, 3, 4, 5]
+    )
+  );
+
+  it(
     "String.prototype.json get parsed after this value",
     () => expect(
       _(a).json.json._.a
